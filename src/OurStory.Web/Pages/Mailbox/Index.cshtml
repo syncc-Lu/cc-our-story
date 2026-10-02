@@ -1,0 +1,53 @@
+@page "/mailbox"
+@model OurStory.Web.Pages.Mailbox.IndexModel
+@inject OurStory.Core.Time.SiteClock Clock
+@{
+    ViewData["Title"] = "私密留言";
+    ViewData["ActiveNav"] = "mailbox";
+    ViewData["Bundle"] = "mailbox";
+}
+<main id="main" class="mailbox-page">
+    <header class="mailbox-heading">
+        <p>BETWEEN US</p>
+        <h1>@Icon("message-circle-heart") 我们的悄悄话</h1>
+        <p>日常的想念、没说完的话，都留在我们之间。</p>
+        <small>@Icon("lock") 仅你们两人可见</small>
+    </header>
+    @if (Model.Flash is not null) { <p class="mailbox-notice" role="status">@Model.Flash</p> }
+    <section class="mailbox-conversation" aria-labelledby="conversation-title">
+        <h2 id="conversation-title">@Icon("heart") 我们的留言</h2>
+        <nav class="mailbox-pagination" aria-label="留言翻页">
+            @if (Model.HasNext) { <a href="/mailbox?p=@(Model.CurrentPage + 1)">查看更早的留言</a> }
+            @if (Model.CurrentPage > 1) {
+                <a href="/mailbox?p=@(Model.CurrentPage - 1)">查看较新的留言</a>
+                <a href="/mailbox">回到最新</a>
+            }
+        </nav>
+        @if (Model.Messages.Count == 0) {
+            <div class="mailbox-empty">@Icon("mail")<p>这里还没有留言</p><small>写下第一句悄悄话，开启只属于你们的对话。</small></div>
+        }
+        @foreach (var message in Model.Messages) {
+            var isMine = message.SenderId == Model.CurrentUserId;
+            <article class="mailbox-letter @(isMine ? "is-mine" : "is-partner")" id="message-@message.Id">
+                <header><strong>@(isMine ? "我" : "对方")</strong><time datetime="@message.CreatedAt.ToString("O")">@Clock.ToLocal(message.CreatedAt).ToString("yyyy.MM.dd HH:mm")</time></header>
+                <p class="mailbox-content">@message.Content</p>
+                @if (isMine) {
+                    <form method="post" asp-page-handler="Delete" data-confirm="删除后，你和对方都将看不到这条留言，确定删除吗？">
+                        <input type="hidden" name="id" value="@message.Id" />
+                        <button type="submit" class="btn btn-ghost btn-small">@Icon("trash-2") 删除我的留言</button>
+                    </form>
+                }
+            </article>
+        }
+    </section>
+    <section class="mailbox-compose" aria-labelledby="compose-title">
+        <h2 id="compose-title">@Icon("pen-line") 想对你说</h2>
+        <p>写下此刻的心情，也接住对方留在这里的话。</p>
+        @if (Model.Error is not null) { <p class="mailbox-error" role="alert">@Model.Error</p> }
+        <form method="post">
+            <label asp-for="MessageText">我的留言</label>
+            <textarea asp-for="MessageText" rows="4" maxlength="2000" required placeholder="今天有没有一句话，想只说给你听…"></textarea>
+            <div class="mailbox-send"><small>最多 2000 字 · 仅你们两人可见</small><button type="submit" class="btn btn-primary">@Icon("send") 留下悄悄话</button></div>
+        </form>
+    </section>
+</main>

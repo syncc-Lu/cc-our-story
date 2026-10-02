@@ -1,0 +1,151 @@
+.mailbox-page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 64px 24px;
+}
+
+.mailbox-heading {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.mailbox-heading>p:first-child {
+    letter-spacing: .2em;
+    font-size: .75rem;
+}
+
+.mailbox-heading h1 {
+    font-size: 2rem;
+}
+
+.mailbox-compose,.mailbox-letter,.mailbox-empty {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    margin: 20px 0;
+    background: var(--surface);
+}
+
+.mailbox-compose>p,.mailbox-heading p,.mailbox-send small,.mailbox-letter time {
+    color: var(--muted);
+}
+
+.mailbox-compose label {
+    display: block;
+    margin: 20px 0 8px;
+}
+
+.mailbox-compose textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    resize: vertical;
+    min-height: 150px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1.8;
+}
+
+.mailbox-send,.mailbox-letter header,.mailbox-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.mailbox-letter header {
+    font-size: .85rem;
+    flex-wrap: wrap;
+}
+
+.mailbox-content {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.9;
+    margin: 24px 0;
+}
+
+.mailbox-inbox {
+    margin-top: 48px;
+}
+
+.mailbox-empty {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+.mailbox-notice {
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.mailbox-error {
+    color: #c34657;
+}
+
+.mailbox-letter form {
+    text-align: right;
+}
+
+@media(max-width:520px) {
+    .mailbox-page {
+        padding: 36px 16px;
+    }
+    .mailbox-compose,.mailbox-letter {
+        padding: 20px;
+    }
+    .mailbox-send {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+.mailbox-page .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: var(--pink);
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+.mailbox-page .btn:hover {
+    background: var(--pink-dark);
+}
+
+.mailbox-page .btn-ghost {
+    background: transparent;
+    border-color: var(--line-strong);
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.mailbox-page .btn-ghost:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.mailbox-page textarea:focus-visible,.mailbox-page button:focus-visible {
+    outline: 2px solid var(--pink);
+    outline-offset: 3px;
+}
+
+/* 同一段对话中区分自己和对方的留言，窄屏保留方向感。 */
+.mailbox-letter { width: 88%; box-sizing: border-box; }
+.mailbox-letter.is-mine { margin-left: auto; background: var(--pink-softer); }
+.mailbox-letter.is-partner { margin-right: auto; }
+.mailbox-heading small { color: var(--muted); }
+.mailbox-pagination { flex-wrap: wrap; }
+@media (max-width: 520px) {
+    .mailbox-letter { width: 94%; }
+}

@@ -84,6 +84,7 @@ public static class ServiceCollectionExtensions {
         _ = services.AddScoped<IAnniversaryRewardService, AnniversaryRewardService>();
         _ = services.AddScoped<IMomentService, MomentService>();
         _ = services.AddScoped<ICommentService, CommentService>();
+        _ = services.AddScoped<OurStory.Services.Mailbox.MailboxService>();
         _ = services.AddSingleton(new CycleAnalysisOptions());
         _ = services.AddSingleton<CycleWriteCoordinator>();
         _ = services.AddSingleton<ICycleAnalysisService, RuleBasedCycleAnalysisService>();
