@@ -85,6 +85,7 @@ public static class ServiceCollectionExtensions {
         _ = services.AddScoped<IMomentService, MomentService>();
         _ = services.AddScoped<ICommentService, CommentService>();
         _ = services.AddScoped<OurStory.Services.Mailbox.MailboxService>();
+        _ = services.AddSingleton<OurStory.Services.Games.GomokuUpdates>();
         _ = services.AddScoped<OurStory.Services.Games.GomokuService>();
         _ = services.AddSingleton(new CycleAnalysisOptions());
         _ = services.AddSingleton<CycleWriteCoordinator>();

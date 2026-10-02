@@ -9,7 +9,7 @@ namespace OurStory.Services.Games;
 public sealed record GomokuState(int Version, int MyColor, int[] Moves, int Outcome);
 public sealed record GomokuResult(bool Ok, string? Message, GomokuState? Game);
 
-public sealed class GomokuService(OurStoryDbContext db) {
+public sealed class GomokuService(OurStoryDbContext db, GomokuUpdates updates) {
     private async Task<(int RelationshipId, int PartnerId)?> PairAsync(int userId, CancellationToken ct) {
         var member = await db.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Id == userId && x.IsActive
             && (x.Role == UserRole.Boy || x.Role == UserRole.Girl)
@@ -89,6 +89,7 @@ public sealed class GomokuService(OurStoryDbContext db) {
                     .SetProperty(x => x.BlackUserId, next.BlackUserId).SetProperty(x => x.WhiteUserId, next.WhiteUserId), ct);
             if (updated == 0) return new(false, "棋局已更新，请按最新棋盘继续。", null);
         }
+        updates.Publish();
         return new(true, null, State(next, userId));
     }
 }

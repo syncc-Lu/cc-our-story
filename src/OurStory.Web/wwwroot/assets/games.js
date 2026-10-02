@@ -1,4 +1,4 @@
-/* 在线五子棋：服务端保存和裁定棋局，浏览器只显示已确认的落子。 */
+/* 在线五子棋：长轮询等待变更，待确认棋子仅作点击反馈，棋局仍以服务端为准。 */
 (() => {
   'use strict';
   const root = document.querySelector('[data-gomoku]');
@@ -16,6 +16,10 @@
   let focusPoint = 112;
   let generation = 0;
   let timer;
+  let stateRequest = null;
+  let forceRefresh = false;
+  let pendingPoint = null;
+  let suspended = false;
   const colorName = color => color === 1 ? '黑棋' : '白棋';
   const turn = () => (game?.moves.length ?? 0) % 2 + 1;
   const canPlay = () => ready && !busy && game && game.outcome === 0 && game.myColor === turn();
@@ -43,6 +47,7 @@
   function render() {
     const moves = game?.moves ?? [];
     const colors = new Map(moves.map((point, i) => [point, i % 2 + 1]));
+    if (pendingPoint !== null && !colors.has(pendingPoint)) colors.set(pendingPoint, game.myColor);
     const wins = new Set(winningPoints(moves, game?.outcome));
     const playable = canPlay();
     board.classList.toggle('can-play', !!playable);
@@ -54,6 +59,7 @@
       cell.tabIndex = point === focusPoint ? 0 : -1;
       cell.classList.toggle('last', moves.length > 0 && point === moves[moves.length - 1]);
       cell.classList.toggle('winner', wins.has(point));
+      cell.classList.toggle('pending', point === pendingPoint);
       if (cell.dataset.color !== (color ? String(color) : undefined)) {
         cell.replaceChildren();
         if (color) {
@@ -71,11 +77,13 @@
     find('start').disabled = !ready || busy || !!(game && game.outcome === 0);
     find('start').textContent = game ? '再来一局' : '开始一局';
     find('resign').disabled = !ready || busy || !game || game.outcome !== 0;
-    find('refresh').disabled = busy || polling;
+    find('refresh').disabled = busy;
     const status = find('status'), hint = find('status-hint');
     if (!ready) {
       status.textContent = stopped ? '暂时无法进入棋局' : '正在连接棋局…';
       hint.textContent = '连接恢复后才能落子，已保存的棋局不会丢失';
+    } else if (pendingPoint !== null) {
+      status.textContent = '正在确认落子…'; hint.textContent = '棋子已标记，等待服务器确认';
     } else if (!game) {
       status.textContent = '准备好，来一局？'; hint.textContent = '点击「开始一局」，邀请对方打开此页面';
     } else if (game.outcome) {
@@ -113,23 +121,29 @@
     find('connection').textContent = '已同步 · 对方落子后自动更新';
   }
 
-  async function sync() {
+  async function sync(wait = false) {
     if (busy || polling || stopped) return;
     polling = true;
     const current = generation;
+    const controller = new AbortController();
+    stateRequest = controller;
+    const timeout = setTimeout(() => controller.abort(new DOMException('连接超时', 'TimeoutError')), 30000);
     try {
-      const data = await request('/games/gomoku?handler=State');
+      const query = wait ? `&wait=true&version=${game?.version ?? 0}` : '';
+      const data = await request(`/games/gomoku?handler=State${query}`, { signal: controller.signal });
       if (current !== generation) return;
       accept(data);
       if (syncFailed) error('');
       syncFailed = false;
     } catch (e) {
-      if (current !== generation) return;
+      if (current !== generation || e.name === 'AbortError') return;
       ready = false;
       syncFailed = true;
       find('connection').textContent = stopped ? '连接已暂停' : '连接中断，正在自动重连…';
       error(e instanceof TypeError || e.name === 'TimeoutError' ? '暂时无法连接服务器，请检查网络。' : e.message);
     } finally {
+      clearTimeout(timeout);
+      if (stateRequest === controller) stateRequest = null;
       polling = false;
       render();
     }
@@ -138,6 +152,8 @@
   async function act(action, point = -1) {
     if (busy || !ready) return;
     busy = true; generation++;
+    stateRequest?.abort();
+    pendingPoint = action === 'move' ? point : null;
     error(''); render();
     const payload = new URLSearchParams({ action, version: String(game?.version ?? 0),
       row: String(Math.floor(point / 15)), col: String(point % 15), __RequestVerificationToken: token });
@@ -147,8 +163,9 @@
       error(e instanceof TypeError || e.name === 'TimeoutError' ? '未确认操作结果，正在重新读取棋局，请勿重复落子。' : e.message);
       ready = false;
     } finally {
+      pendingPoint = null;
       busy = false; render();
-      await sync();
+      schedule(0);
     }
   }
 
@@ -175,17 +192,32 @@
   find('resign').addEventListener('click', () => {
     if (window.confirm('认输后本局结束，对方获胜。确定认输吗？')) void act('resign');
   });
-  find('refresh').addEventListener('click', () => { error(''); stopped = false; void sync(); });
+  find('refresh').addEventListener('click', () => {
+    error(''); stopped = false; forceRefresh = true; stateRequest?.abort(); schedule(0);
+  });
   find('invite').addEventListener('click', async () => {
     const link = new URL('/games/gomoku', window.location.origin).href;
     try { await navigator.clipboard.writeText(link); find('connection').textContent = '链接已复制，让对方用自己的账号打开即可'; }
     catch { window.prompt('复制此链接，发给对方：', link); }
   });
-  async function poll() {
+  function schedule(delay) {
     clearTimeout(timer);
-    if (!document.hidden) await sync();
-    timer = setTimeout(poll, 2000);
+    if (!suspended) timer = setTimeout(poll, delay);
   }
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) void sync(); });
-  render(); void poll();
+  async function poll() {
+    if (suspended) return;
+    if (document.hidden || busy || polling || stopped) { schedule(1000); return; }
+    const wait = ready && !forceRefresh;
+    forceRefresh = false;
+    await sync(wait);
+    // 成功后立即重新等待，只在失败时退避，避免断线时请求风暴。
+    schedule(ready ? 0 : 1500);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stateRequest?.abort();
+    else { forceRefresh = true; schedule(0); }
+  });
+  window.addEventListener('pagehide', () => { suspended = true; clearTimeout(timer); stateRequest?.abort(); });
+  window.addEventListener('pageshow', () => { suspended = false; forceRefresh = true; schedule(0); });
+  render(); schedule(0);
 })();

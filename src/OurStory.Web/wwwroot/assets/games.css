@@ -30,6 +30,7 @@
 .board-point .piece { width: 86%; height: 86%; border-radius: 50%; pointer-events: none; position: relative; }
 .board-point.last .piece::after { content: ''; position: absolute; inset: 37%; border-radius: 50%; background: #e9818d; box-shadow: 0 0 0 1px #fff8; }
 .board-point.winner .piece { outline: 2px solid #c4526b; outline-offset: 1px; }
+.board-point.pending .piece { opacity: .55; outline: 2px dashed var(--pink-dark); outline-offset: 1px; }
 .board-point[aria-disabled=true] { cursor: default; }
 @media (hover: hover) { .gomoku-board.can-play .board-point:not([data-color]):hover { background: #fff5; } }
 .board-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; font-size: 11px; color: var(--muted); }
