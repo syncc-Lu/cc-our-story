@@ -60,6 +60,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/login";
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
         options.SlidingExpiration = true;
+
+        // 认证跳转只使用站内路径，避免代理的内部 Host 出现在浏览器地址栏。
+        // 继续调用默认事件，保留 API / AJAX 请求的 401、403 行为。
+        var redirectToLogin = options.Events.OnRedirectToLogin;
+        options.Events.OnRedirectToLogin = context => {
+            context.RedirectUri = new Uri(context.RedirectUri).PathAndQuery;
+            return redirectToLogin(context);
+        };
+        var redirectToAccessDenied = options.Events.OnRedirectToAccessDenied;
+        options.Events.OnRedirectToAccessDenied = context => {
+            context.RedirectUri = new Uri(context.RedirectUri).PathAndQuery;
+            return redirectToAccessDenied(context);
+        };
     });
 
 builder.Services.AddAuthorization();
