@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     ports:
-      - "${HTTP_PORT:-8080}:8080"
+      - "127.0.0.1:${HTTP_PORT:-520}:8080"
     volumes:
       - ourstory_data:/data
     restart: unless-stopped
     healthcheck:
       # /healthz 只探一下数据库连不连得上，不渲染页面，比探首页省得多
-      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/healthz > /dev/null || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:520/healthz > /dev/null || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
