@@ -1,0 +1,41 @@
+/* 游戏大厅与在线五子棋，沿用站点的明暗主题。 */
+.games-page { max-width: 1140px; margin: 0 auto; padding: 122px 28px 64px; }
+.games-heading { max-width: 680px; margin-bottom: 40px; }
+.games-eyebrow { color: var(--pink-dark); letter-spacing: .18em; font-size: 11px; font-weight: 700; }
+.games-heading h1 { font: 600 clamp(28px, 5vw, 44px)/1.4 var(--serif); margin: 14px 0; }
+.games-heading > p:last-child, .games-footnote { color: var(--muted); line-height: 1.8; }
+.games-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.game-card { overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
+.game-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.game-preview { position: relative; height: 240px; display: grid; place-items: center; background: linear-gradient(135deg, #ede2ce, #f8eedf); overflow: hidden; }
+.game-preview > .game-badge { position: absolute; left: 20px; bottom: 16px; color: #66513b; background: #fff8; }
+.game-badge { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 30px; background: var(--surface-muted); font-size: 12px; white-space: nowrap; }
+.mini-board { position: relative; width: 252px; height: 196px; transform: rotate(-12deg); background-image: linear-gradient(#a3865860 1px, transparent 1px), linear-gradient(90deg, #a3865860 1px, transparent 1px); background-size: 28px 28px; }
+.mini-board i { position: absolute; width: 24px; height: 24px; border-radius: 50%; }
+.s1 { left: 72px; top: 72px; }.s2 { left: 100px; top: 72px; }.s3 { left: 100px; top: 100px; }.s4 { left: 128px; top: 72px; }.s5 { left: 128px; top: 128px; }
+.stone-black { background: radial-gradient(circle at 32% 26%, #63636c, #20212a 65%, #101017); box-shadow: 1px 3px 5px #0004; }
+.stone-white { background: radial-gradient(circle at 32% 26%, #fff, #f2f1eb 65%, #d0cec6); box-shadow: 1px 3px 5px #0003, inset 0 0 0 1px #aaa6; }
+.game-card-body { padding: 26px; }.game-card-body h2 { font-size: 26px; margin: 12px 0; }.game-card-body > p:not(.games-eyebrow) { color: var(--muted); line-height: 1.8; font-size: 14px; }
+.game-card-footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 28px; align-items: center; font-size: 12px; }.game-card-footer span { color: var(--muted); }.game-card-footer strong { color: var(--pink-dark); }
+.games-footnote { margin-top: 28px; font-size: 13px; }.games-back { color: var(--muted); font-size: 13px; }.gomoku-heading { display: flex; align-items: center; justify-content: space-between; margin: 24px 0; }.gomoku-heading h1 { margin: 8px 0 0; font: 600 34px var(--serif); }
+.gomoku-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 24px; align-items: start; }
+.gomoku-table, .game-panel { border: 1px solid var(--line); background: var(--surface); border-radius: 22px; box-shadow: var(--shadow-sm); }
+.gomoku-table { padding: 24px; }.game-status-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; min-height: 54px; }.game-status-bar h2 { font-size: 17px; margin: 0 0 5px; }.game-status-bar p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }.turn-stone { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; }.move-count { margin-left: auto; color: var(--muted); white-space: nowrap; font-size: 12px; }
+.board-frame { padding: 12px; background: linear-gradient(135deg, #f0d9b1, #e7c792); border-radius: 12px; box-shadow: inset 0 0 0 1px #a7884b44; }
+.gomoku-board { aspect-ratio: 1; display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); position: relative; isolation: isolate; }
+.gomoku-board::before { content: ''; position: absolute; inset: 3.333333%; pointer-events: none; z-index: -1; border-right: 1px solid #a18450; border-bottom: 1px solid #a18450; background-image: linear-gradient(#a18450 1px, transparent 1px), linear-gradient(90deg, #a18450 1px, transparent 1px); background-size: calc(100% / 14) calc(100% / 14); }
+.board-point { position: relative; padding: 0; min-width: 0; min-height: 0; border-radius: 50%; cursor: pointer; touch-action: manipulation; display: grid; place-items: center; }
+.board-point:focus-visible { outline: 2px solid #895439; outline-offset: -2px; border-radius: 50%; }
+.board-point.star::before { content: ''; position: absolute; width: 5px; height: 5px; background: #866a3f; border-radius: 50%; z-index: -1; }
+.board-point .piece { width: 86%; height: 86%; border-radius: 50%; pointer-events: none; position: relative; }
+.board-point.last .piece::after { content: ''; position: absolute; inset: 37%; border-radius: 50%; background: #e9818d; box-shadow: 0 0 0 1px #fff8; }
+.board-point.winner .piece { outline: 2px solid #c4526b; outline-offset: 1px; }
+.board-point[aria-disabled=true] { cursor: default; }
+@media (hover: hover) { .gomoku-board.can-play .board-point:not([data-color]):hover { background: #fff5; } }
+.board-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; font-size: 11px; color: var(--muted); }
+.game-sidebar { display: grid; gap: 20px; }.game-panel { padding: 22px; }.game-panel h2 { font-size: 17px; margin: 12px 0 22px; }.player-row { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }.player-row strong { font-size: 14px; }.player-row small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }.player-stone { width: 28px; height: 28px; border-radius: 50%; background-color: var(--surface-muted); flex-shrink: 0; }
+.game-connection, .game-help, .game-rules { font-size: 12px; color: var(--muted); line-height: 1.8; }.game-connection { color: var(--pink-dark); }.game-help { margin: 18px 0 0; }.game-rules h2 { color: var(--ink); margin-top: 0; }.game-rules ol { padding-left: 18px; margin-bottom: 18px; }.game-rules li + li { margin-top: 8px; }.game-rules p { margin-bottom: 0; }
+.game-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.game-button { padding: 11px 10px; border: 1px solid var(--line-strong); border-radius: 10px; font-size: 12px; cursor: pointer; background: var(--surface); }.game-button.primary { background: var(--pink-dark); color: var(--paper); border-color: transparent; }.game-button:hover { filter: brightness(.95); }.game-button:disabled { opacity: .45; cursor: not-allowed; }.game-error { color: var(--danger); font-size: 13px; line-height: 1.7; }.game-login { display: block; color: var(--pink-dark); font-size: 13px; margin-top: 16px; }.game-login[hidden] { display: none; }
+@media (max-width: 800px) { .gomoku-layout { grid-template-columns: minmax(0, 1fr); }.game-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }.games-grid { grid-template-columns: minmax(0, 1fr); max-width: 540px; } }
+@media (max-width: 520px) { .games-page { padding: 98px 14px 40px; }.gomoku-table { padding: 14px; }.board-frame { padding: 7px; }.game-sidebar { grid-template-columns: minmax(0, 1fr); }.game-status-bar { gap: 8px; }.game-status-bar h2 { font-size: 15px; }.game-card-body { padding: 22px; }.game-card-footer { flex-wrap: wrap; }.board-point .piece { width: 90%; height: 90%; }.board-point.star::before { width: 3px; height: 3px; } }
+@media (prefers-reduced-motion: reduce) { .game-card { transition: none; } }

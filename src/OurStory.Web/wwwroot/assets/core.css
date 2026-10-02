@@ -115,6 +115,9 @@ img { max-width: 100%; display: block }
 }
 
 .site-nav nav {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
     display: flex;
     gap: 4px;
     padding: 5px;
@@ -127,6 +130,8 @@ img { max-width: 100%; display: block }
 }
 
 .site-nav nav a {
+    flex-shrink: 0;
+    white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 7px;
@@ -146,7 +151,7 @@ img { max-width: 100%; display: block }
     box-shadow: var(--shadow-sm);
 }
 
-.nav-actions { display: flex; align-items: center; gap: 8px }
+.nav-actions { flex-shrink: 0; display: flex; align-items: center; gap: 8px }
 
 .theme-toggle,
 .admin-link {

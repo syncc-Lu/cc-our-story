@@ -1,0 +1,28 @@
+@page "/games"
+@{
+    ViewData["Title"] = "一起玩";
+    ViewData["ActiveNav"] = "games";
+    ViewData["Bundle"] = "games";
+}
+<main id="main" class="games-page">
+    <header class="games-heading">
+        <p class="games-eyebrow">A LITTLE PLAYTIME</p>
+        <h1>今天，一起玩什么？</h1>
+        <p>把忙碌放一放，留一点时间，和喜欢的人较量一下。</p>
+    </header>
+    <section class="games-grid" aria-label="选择小游戏">
+        <a class="game-card" href="/games/gomoku">
+            <div class="game-preview" aria-hidden="true">
+                <div class="mini-board"><i class="stone-black s1"></i><i class="stone-white s2"></i><i class="stone-black s3"></i><i class="stone-white s4"></i><i class="stone-black s5"></i></div>
+                <span class="game-badge">经典棋类 · 在线双人</span>
+            </div>
+            <div class="game-card-body">
+                <p class="games-eyebrow">01 / GOMOKU</p>
+                <h2>五子棋</h2>
+                <p>一人一色，轮流落子。先把五颗棋子连成一线，就赢下这一局。</p>
+                <div class="game-card-footer"><span>@Icon("lock") 情侣专属对局</span><strong>开始下棋 @Icon("arrow-right")</strong></div>
+            </div>
+        </a>
+    </section>
+    <p class="games-footnote">双方登录各自账号，即可在不同设备上一起玩。</p>
+</main>

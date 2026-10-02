@@ -1,6 +1,17 @@
 (function () {
   'use strict';
 
+  // 导航项增多时可横向滚动，进入页面后让当前入口保持可见。
+  const navLinks = document.querySelector('.site-nav nav');
+  const revealActiveNav = () => {
+    const active = navLinks?.querySelector('[aria-current="page"]');
+    if (!active || navLinks.scrollWidth <= navLinks.clientWidth) return;
+    navLinks.scrollLeft += active.getBoundingClientRect().left - navLinks.getBoundingClientRect().left
+      - (navLinks.clientWidth - active.clientWidth) / 2;
+  };
+  requestAnimationFrame(revealActiveNav);
+  window.addEventListener('resize', revealActiveNav);
+
   const root = document.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
