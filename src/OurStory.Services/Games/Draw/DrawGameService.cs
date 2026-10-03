@@ -126,14 +126,27 @@ public sealed class DrawGameService(OurStoryDbContext db, DrawPairAccess access,
                         break;
                     case "ink":
                         if (session.DrawerId != userId || session.Stage != "drawing") return Failure("当前不能画画。");
-                        if (command.CanvasEpoch != session.CanvasEpoch) return Failure("画布已清空，请在新画布上继续。");
+                        if (command.CanvasEpoch != session.CanvasEpoch) return Failure("画布已更新，请在当前画布上继续。");
                         var stroke = command.Stroke;
                         if (stroke is null || stroke.Id != command.RequestId || !Colors.Contains(stroke.Color) || stroke.Width is < 1 or > 30
+                            || (stroke.GestureId is not null && !Guid.TryParse(stroke.GestureId, out _))
                             || stroke.Points is null || stroke.Points.Length is < 1 or > 48
                             || stroke.Points.Any(p => p is null || !double.IsFinite(p.X) || !double.IsFinite(p.Y) || p.X is < 0 or > 1000 || p.Y is < 0 or > 700))
                             return Failure("笔画数据无效。");
                         if (session.Strokes.Count >= 1200) return Failure("这一轮笔画较多，请清空画布后继续。");
                         session.Strokes.Add(stroke);
+                        break;
+                    case "undo":
+                        if (session.DrawerId != userId || session.Stage != "drawing") return Failure("只有本轮画画的人可以撤回。");
+                        if (command.CanvasEpoch != session.CanvasEpoch) return Failure("画布已更新，请重试。");
+                        if (session.Strokes.Count == 0) return Failure("还没有可以撤回的笔画。");
+                        // 同一次落笔的实时分段一起移除；旧客户端的笔画按单段兼容。
+                        var last = session.Strokes[^1];
+                        var first = session.Strokes.Count - 1;
+                        if (last.GestureId is not null)
+                            while (first > 0 && session.Strokes[first - 1].GestureId == last.GestureId) first--;
+                        session.Strokes.RemoveRange(first, session.Strokes.Count - first);
+                        session.CanvasEpoch = Guid.NewGuid().ToString("N");
                         break;
                     case "clear":
                         if (session.DrawerId != userId || session.Stage != "drawing") return Failure("只有本轮画画的人可以清空画布。");

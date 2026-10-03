@@ -4,7 +4,7 @@ namespace OurStory.Services.Games.Draw;
 
 public sealed record DrawWordSnapshot(string Answer, string[] Aliases, string Category, int Difficulty);
 public sealed record DrawPoint(double X, double Y);
-public sealed record DrawStroke(string Id, string Color, int Width, bool Eraser, DrawPoint[] Points);
+public sealed record DrawStroke(string Id, string Color, int Width, bool Eraser, DrawPoint[] Points, string? GestureId = null);
 public sealed record DrawGuess(string Text, bool Correct);
 public sealed record DrawRoundResult(int Round, string Answer, bool Correct);
 

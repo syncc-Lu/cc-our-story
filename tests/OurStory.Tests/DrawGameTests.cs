@@ -139,6 +139,39 @@ public sealed class DrawGameTests : IAsyncLifetime, IAsyncDisposable {
     }
 
     [Fact]
+    public async Task UndoRemovesWholeGestureAndSyncsWithNewEpochWithoutReplayingOnRetry() {
+        var state = await Choose(boy.Id, await Start());
+        var original = Ink(state, new DrawPoint(10, 10));
+        await service.ActAsync(boy.Id, original);
+        var gesture = Guid.NewGuid().ToString();
+        for (var i = 0; i < 3; i++) {
+            var segment = Ink(state, new DrawPoint(20 + i, 20));
+            segment.Stroke = segment.Stroke! with { GestureId = gesture, Eraser = true };
+            Assert.True((await service.ActAsync(boy.Id, segment)).Ok);
+        }
+        var undo = Command("undo", state);
+        Assert.False((await service.ActAsync(girl.Id, undo)).Ok);
+        var result = await service.ActAsync(boy.Id, undo);
+        Assert.True(result.Ok); Assert.Equal(1, result.Game!.StrokeCount);
+        Assert.NotEqual(state.CanvasEpoch, result.Game.CanvasEpoch);
+        Assert.Equal(1, (await service.ActAsync(boy.Id, undo)).Game!.StrokeCount);
+        var synced = (await service.GetAsync(girl.Id, state.CanvasEpoch, 4)).Game!;
+        Assert.Equal(0, synced.StrokeBase); Assert.Equal(original.RequestId, Assert.Single(synced.Strokes).Id);
+        Assert.False((await service.ActAsync(boy.Id, Ink(state, new DrawPoint(40, 40)))).Ok);
+        Assert.False((await service.ActAsync(boy.Id, Command("undo", state))).Ok);
+        await using var fresh = Open();
+        Assert.Single((await GameService(fresh).GetAsync(boy.Id)).Game!.Strokes);
+        result = await service.ActAsync(boy.Id, Command("undo", synced));
+        Assert.True(result.Ok); Assert.Empty(result.Game!.Strokes);
+        Assert.False((await service.ActAsync(boy.Id, Command("undo", result.Game))).Ok);
+        var invalid = Ink(result.Game, new DrawPoint(1, 1));
+        invalid.Stroke = invalid.Stroke! with { GestureId = "invalid" };
+        Assert.False((await service.ActAsync(boy.Id, invalid)).Ok);
+        time.Advance(TimeSpan.FromSeconds(90));
+        Assert.False((await service.ActAsync(boy.Id, Command("undo", result.Game))).Ok);
+    }
+
+    [Fact]
     public async Task CrossRelationshipAccessAndDisabledAccountsAreRejected() {
         var state = await Choose(boy.Id, await Start());
         Assert.True((await service.GetAsync(0)).Forbidden);

@@ -35,3 +35,49 @@
     .draw-matchbar { padding: 12px; }
     .draw-guesses { min-height: 35px; }
 }
+/* 大画布使用页面内全屏，手机浏览器无需支持 Fullscreen API。 */
+.draw-expand-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; color: var(--muted); }
+.draw-expand-bar [data-expand] { margin-left: auto; }
+.draw-expand-bar [data-large-timer] { color: var(--pink-dark); white-space: nowrap; }
+.draw-toolbar button, .draw-toolbar select, .draw-expand-bar button { min-height: 44px; }
+.draw-color { width: 36px; min-width: 36px; border-radius: 12px; }
+.draw-colors { gap: 6px; padding: 3px; }
+.draw-screen-open { overflow: hidden; }
+.draw-expanded .draw-workspace { position: fixed; inset: 0; z-index: 2000; height: 100dvh; box-sizing: border-box; border: 0; border-radius: 0; padding: 12px; display: flex; flex-direction: column; overflow: auto; padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+.draw-expanded .draw-expand-bar { flex-shrink: 0; margin-bottom: 6px; }
+.draw-expanded .draw-status, .draw-expanded .board-caption, .draw-expanded .draw-secret small { display: none; }
+.draw-expanded .draw-secret { flex-shrink: 0; margin-bottom: 6px; padding: 4px 10px; }
+.draw-expanded .draw-secret strong { font-size: 18px; }
+.draw-expanded .draw-canvas-wrap { flex-shrink: 0; align-self: center; margin: auto 0; }
+.draw-expanded .draw-toolbar { order: 2; justify-content: center; flex-shrink: 0; gap: 6px; margin: 8px 0 0; }
+.draw-expanded .draw-reveal { padding: 8px; margin: 6px 0; flex-shrink: 0; }
+.draw-expanded .draw-reveal h3, .draw-expanded .draw-reveal p { margin: 4px; }
+@media (max-width: 540px) {
+    .draw-page { padding-left: 8px; padding-right: 8px; }
+    .draw-workspace { padding: 10px 6px; border-radius: 14px; }
+    .draw-toolbar { gap: 6px; }
+    .draw-colors { width: 100%; justify-content: space-between; }
+    .draw-color { width: 32px; min-width: 32px; }
+    .draw-toolbar label { margin-right: auto; }
+    .draw-toolbar select { min-width: 64px; }
+    .draw-guess-entry input { font-size: 16px; }
+    .draw-page .gomoku-heading .games-eyebrow, .draw-subtitle { display: none; }
+    .draw-expanded .draw-workspace { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+    .draw-expanded .draw-workspace { padding: 6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left)); }
+    .draw-expanded .draw-secret { position: absolute; top: 10px; left: 30%; width: 35%; margin: 0; }
+    .draw-expanded .draw-secret span { display: none; }
+    .draw-expanded .draw-secret strong { grid-column: 1 / -1; text-align: center; font-size: 16px; }
+    .draw-expanded .draw-toolbar { margin-top: 6px; }
+    .draw-expanded .draw-colors { width: auto; }
+    .draw-expanded .draw-expand-bar { margin-bottom: 4px; }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+    .draw-expanded .draw-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 180px; grid-template-rows: auto minmax(0, 1fr); column-gap: 10px; }
+    .draw-expanded .draw-expand-bar { grid-column: 1 / -1; }
+    .draw-expanded .draw-canvas-wrap { grid-column: 1; grid-row: 2; place-self: center; margin: 0; }
+    .draw-expanded .draw-toolbar { grid-column: 2; grid-row: 2; align-self: center; }
+    .draw-expanded .draw-colors { display: grid; grid-template-columns: repeat(4, 36px); }
+    .draw-expanded .draw-toolbar label { width: 100%; text-align: center; }
+}

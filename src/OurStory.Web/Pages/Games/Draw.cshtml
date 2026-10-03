@@ -14,6 +14,7 @@
     <div class="draw-matchbar"><span data-round>准备开始</span><strong data-score>共同猜中 0 / 6</strong><span class="draw-timer" data-timer aria-label="本轮剩余时间">90 秒</span></div>
     <div class="draw-layout">
         <section class="draw-workspace" aria-labelledby="draw-status">
+            <div class="draw-expand-bar"><span data-large-hint>手机横屏，画得更舒展</span><strong data-large-timer hidden></strong><button type="button" class="draw-tool" data-expand aria-pressed="false">大画布</button></div>
             <div class="draw-status"><div><h2 id="draw-status" data-status role="status" aria-live="polite">正在连接…</h2><p data-hint>双方登录各自账号，打开此页面即可一起玩。</p></div><span class="draw-role" data-role>两个人的画室</span></div>
             <div class="draw-secret" data-secret hidden><span>本轮你要画</span><strong data-answer></strong><small>只有你能看到 · 请用图画表达，不要直接写答案</small></div>
             <div class="draw-choices" data-choices hidden aria-label="选择本轮要画的词"></div>
@@ -21,6 +22,7 @@
                 <div class="draw-colors" data-colors></div>
                 <label>粗细 <select data-width aria-label="画笔粗细"><option value="4">细</option><option value="8" selected>中</option><option value="16">粗</option><option value="28">特粗</option></select></label>
                 <button type="button" class="draw-tool" data-eraser aria-pressed="false">橡皮</button>
+                <button type="button" class="draw-tool" data-undo>撤回</button>
                 <button type="button" class="draw-tool" data-clear>清空</button>
             </div>
             <div class="draw-canvas-wrap">

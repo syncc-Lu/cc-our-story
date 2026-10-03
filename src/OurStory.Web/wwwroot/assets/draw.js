@@ -85,6 +85,8 @@
     const stage = game?.stage ?? 'idle';
     const isDrawer = !!game?.isDrawer;
     const busy = !!controlBusy();
+    find('expand').hidden = !(isDrawer && stage === 'drawing');
+    if (expanded && (!isDrawer || stage !== 'drawing')) expand(false);
     find('round').textContent = game ? `第 ${game.round} / 6 轮` : '准备开始';
     find('score').textContent = `共同猜中 ${game?.score ?? 0} / 6`;
     find('role').textContent = game ? (isDrawer ? '这一轮 · 我来画' : '这一轮 · 我来猜') : '两个人的画室';
@@ -92,6 +94,7 @@
     find('answer').textContent = isDrawer && stage === 'drawing' ? game.answer : '';
     find('toolbar').hidden = !(isDrawer && stage === 'drawing');
     overlay.classList.toggle('can-draw', !!canDraw());
+    find('undo').disabled = !canDraw() || (!strokes.length && !pending.size && !active);
     find('width').disabled = !canDraw(); find('eraser').disabled = !canDraw(); find('clear').disabled = !canDraw();
     find('colors').querySelectorAll('button').forEach(button => { button.disabled = !canDraw(); });
     find('start').disabled = !connected || busy || (stage !== 'idle' && stage !== 'finished');
@@ -160,6 +163,7 @@
   function updateTimer() {
     const seconds = remaining();
     find('timer').textContent = game?.stage === 'drawing' ? `${seconds} 秒` : game?.stage === 'reveal' ? '本轮结束' : game?.stage === 'finished' ? '挑战完成' : '90 秒';
+    find('large-timer').textContent = find('timer').textContent;
     find('timer').classList.toggle('urgent', game?.stage === 'drawing' && seconds <= 15);
     if (game?.stage === 'drawing' && seconds === 0) {
       overlay.classList.remove('can-draw'); root.querySelector('#draw-guess').disabled = true; find('guess-button').disabled = true;
@@ -262,7 +266,7 @@
   overlay.addEventListener('pointerdown', event => {
     if (!canDraw() || pointer !== null || (event.pointerType === 'mouse' && event.button !== 0)) return;
     event.preventDefault(); pointer = event.pointerId; overlay.setPointerCapture(pointer);
-    active = { id: '', color: brush, width: Number(find('width').value), eraser, points: [point(event)] };
+    active = { id: '', gestureId: uuid(), color: brush, width: Number(find('width').value), eraser, points: [point(event)] };
     paintPreview();
   });
   overlay.addEventListener('pointermove', event => {
@@ -287,6 +291,7 @@
     find('colors').append(button);
   });
   find('eraser').addEventListener('click', () => { eraser = !eraser; find('eraser').setAttribute('aria-pressed', String(eraser)); });
+  find('undo').addEventListener('click', () => { flush(true); stopPointer(); enqueue('undo'); });
   find('clear').addEventListener('click', () => { if (confirm('清空本轮画布？对方的画面也会一起清空。')) { flush(true); stopPointer(); enqueue('clear'); } });
   find('start').addEventListener('click', () => enqueue('start'));
   find('next').addEventListener('click', () => enqueue('next'));
@@ -299,7 +304,40 @@
     try { await navigator.clipboard.writeText(link); find('connection').textContent = '邀请链接已复制，请对方用自己的账号打开'; }
     catch { window.prompt('复制此链接发给对方：', link); }
   });
-  document.addEventListener('visibilitychange', () => {
+  const workspace = root.querySelector('.draw-workspace');
+  const canvasWrap = root.querySelector('.draw-canvas-wrap');
+  let expanded = false, savedScroll = 0;
+  function sizeCanvas() {
+    if (!expanded) return;
+    // 保持双方相同的 10:7 坐标，不拉伸画面；横竖屏切换不会重置画作。
+    const styles = getComputedStyle(workspace);
+    const paddingY = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+    const paddingX = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+    const landscape = matchMedia('(orientation: landscape) and (max-height: 540px)').matches;
+    const available = Math.max(50, workspace.clientHeight - [...workspace.children]
+      .filter(el => el !== canvasWrap && getComputedStyle(el).display !== 'none' && getComputedStyle(el).position !== 'absolute' && (!landscape || !el.matches('[data-toolbar]')))
+      .reduce((sum, el) => sum + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginTop || 0) + parseFloat(getComputedStyle(el).marginBottom || 0), 0) - paddingY);
+    canvasWrap.style.width = `${Math.min(workspace.clientWidth - paddingX - (landscape ? 190 : 0), available * 10 / 7)}px`;
+  }
+  function expand(value) {
+    flush(true); stopPointer();
+    if (value) savedScroll = window.scrollY;
+    expanded = value;
+    root.classList.toggle('draw-expanded', value);
+    document.body.classList.toggle('draw-screen-open', value);
+    find('expand').textContent = value ? '收起画布' : '大画布';
+    find('expand').setAttribute('aria-pressed', String(value));
+    find('large-timer').hidden = !value;
+    find('large-hint').textContent = value ? '横屏可获得更大画布' : '手机横屏，画得更舒展';
+    if (value) sizeCanvas();
+    else { canvasWrap.style.width = ''; window.scrollTo(0, savedScroll); }
+  }
+  find('expand').addEventListener('click', () => expand(!expanded));
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && expanded) expand(false); });
+  new ResizeObserver(sizeCanvas).observe(workspace);
+  window.visualViewport?.addEventListener('resize', sizeCanvas);
+  new MutationObserver(() => { if (expanded) sizeCanvas(); }).observe(workspace, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  document.addEventListener('visibilitychange' , () => {
     if (document.hidden) { flush(true); stopPointer(); stateController?.abort(); }
     else { forceRefresh = true; schedule(0); }
   });
