@@ -4,7 +4,7 @@
   const root = document.querySelector('[data-draw-game]');
   if (!root) return;
   const find = name => root.querySelector(`[data-${name}]`);
-  const canvas = find('canvas'), overlay = find('overlay');
+  const canvas = find('canvas'), overlay = find('overlay'), viewport = find('viewport');
   const ctx = canvas.getContext('2d'), preview = overlay.getContext('2d');
   const token = root.querySelector('[name="__RequestVerificationToken"]').value;
   const colors = ['#30303b', '#df728d', '#e85a50', '#e6a23c', '#55a878', '#4a8ecc', '#916bbf', '#ffffff'];
@@ -12,7 +12,9 @@
   let game = null, strokes = [], epoch = '', queue = [], sending = null;
   let connected = false, stopped = false, suspended = false, polling = false;
   let stateController = null, pollTimer, retryTimer, forceRefresh = true;
-  let brush = colors[0], eraser = false, active = null, pointer = null;
+  let brush = colors[0], brushWidth = 8, eraser = false, active = null, pointer = null;
+  let touchReadyAt = 0, navigating = false, pinch = null;
+  const fingers = new Map();
   let clockValue = Date.now(), clockReadAt = performance.now();
   let choicesKey = '', guessesKey = '', resultsKey = '';
   const pending = new Map();
@@ -50,7 +52,7 @@
   }
   function stopPointer() {
     active = null;
-    if (pointer !== null && overlay.hasPointerCapture(pointer)) overlay.releasePointerCapture(pointer);
+    if (pointer !== null && viewport.hasPointerCapture(pointer)) viewport.releasePointerCapture(pointer);
     pointer = null;
     paintPreview();
   }
@@ -94,6 +96,13 @@
     find('answer').textContent = isDrawer && stage === 'drawing' ? game.answer : '';
     find('toolbar').hidden = !(isDrawer && stage === 'drawing');
     overlay.classList.toggle('can-draw', !!canDraw());
+    viewport.classList.toggle('is-interactive', !!canDraw());
+    find('palette-toggle').disabled = !canDraw();
+    find('widths').querySelectorAll('button').forEach(button => { button.disabled = !canDraw(); });
+    if (expanded) {
+      find('large-hint').textContent = game.answer;
+      find('screen-status').textContent = !connected ? '连接中断，正在重连…' : find('error').textContent || (pending.size ? '画作同步中…' : '单指画画 · 双指缩放移动');
+    }
     find('undo').disabled = !canDraw() || (!strokes.length && !pending.size && !active);
     find('width').disabled = !canDraw(); find('eraser').disabled = !canDraw(); find('clear').disabled = !canDraw();
     find('colors').querySelectorAll('button').forEach(button => { button.disabled = !canDraw(); });
@@ -256,43 +265,122 @@
       y: Math.round(Math.max(0, Math.min(700, (event.clientY - rect.top) / rect.height * 700))) };
   }
   function flush(final = false) {
-    if (!active || (!final && active.points.length < 2)) return;
+    if (!active || navigating || (!final && (performance.now() < touchReadyAt || active.points.length < 2))) return;
     if (!connected || queue.length >= 60) { error('网络暂时跟不上，等笔画同步完成再继续画。'); stopPointer(); return; }
     const segment = { ...active, points: active.points.slice() };
     const last = active.points[active.points.length - 1];
     active = final ? null : { ...active, points: [last] };
     enqueue('ink', { stroke: segment });
   }
-  overlay.addEventListener('pointerdown', event => {
-    if (!canDraw() || pointer !== null || (event.pointerType === 'mouse' && event.button !== 0)) return;
-    event.preventDefault(); pointer = event.pointerId; overlay.setPointerCapture(pointer);
-    active = { id: '', gestureId: uuid(), color: brush, width: Number(find('width').value), eraser, points: [point(event)] };
+  function pinchGeometry() {
+    const [a, b] = [...fingers.values()];
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)) };
+  }
+  viewport.addEventListener('pointerdown', event => {
+    if (!canDraw() || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    event.preventDefault(); closePanels();
+    viewport.setPointerCapture(event.pointerId);
+    fingers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (fingers.size >= 2) {
+      // 给第二根手指一个短暂落下窗口；开始缩放时丢弃尚未发送的触点。
+      if (active && performance.now() >= touchReadyAt) flush(true);
+      active = null; pointer = null; navigating = true;
+      pinch = { ...pinchGeometry(), zoom, panX, panY }; paintPreview(); return;
+    }
+    if (navigating || event.target !== overlay) return;
+    pointer = event.pointerId;
+    touchReadyAt = event.pointerType === 'touch' ? performance.now() + 120 : 0;
+    active = { id: '', gestureId: uuid(), color: brush, width: brushWidth, eraser, points: [point(event)] };
     paintPreview();
   });
-  overlay.addEventListener('pointermove', event => {
+  viewport.addEventListener('pointermove', event => {
+    if (!fingers.has(event.pointerId)) return;
+    fingers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (navigating) {
+      if (fingers.size >= 2 && pinch) {
+        const next = pinchGeometry(), rect = viewport.getBoundingClientRect();
+        zoom = Math.max(1, Math.min(4, pinch.zoom * next.distance / pinch.distance));
+        const ratio = zoom / pinch.zoom;
+        panX = next.x - rect.left - rect.width / 2 - (pinch.x - rect.left - rect.width / 2 - pinch.panX) * ratio;
+        panY = next.y - rect.top - rect.height / 2 - (pinch.y - rect.top - rect.height / 2 - pinch.panY) * ratio;
+        transformCanvas();
+      }
+      return;
+    }
     if (!active || pointer !== event.pointerId) return;
     if (!canDraw()) { flush(true); stopPointer(); return; }
     const next = point(event), last = active.points[active.points.length - 1];
     if (Math.hypot(next.x - last.x, next.y - last.y) < 2) return;
     active.points.push(next);
-    if (active.points.length >= 32) flush();
+    if (active.points.length >= 32) {
+      // 移动轨迹已经明确，允许分段，避免触控落笔窗口内缓存过多点。
+      touchReadyAt = 0; flush();
+    }
     paintPreview();
   });
-  const finishPointer = event => { if (pointer !== event.pointerId) return; flush(true); stopPointer(); };
-  overlay.addEventListener('pointerup', finishPointer);
-  overlay.addEventListener('pointercancel', finishPointer);
-  overlay.addEventListener('lostpointercapture', finishPointer);
+  const finishPointer = event => {
+    if (!fingers.has(event.pointerId)) return;
+    fingers.delete(event.pointerId);
+    if (pointer === event.pointerId) {
+      if (event.type === 'pointerup') flush(true);
+      stopPointer();
+    }
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+    if (!fingers.size) { navigating = false; pinch = null; }
+    else if (navigating && fingers.size >= 2) pinch = { ...pinchGeometry(), zoom, panX, panY };
+  };
+  viewport.addEventListener('pointerup', finishPointer);
+  viewport.addEventListener('pointercancel', finishPointer);
+  viewport.addEventListener('lostpointercapture', finishPointer);
   const flushTimer = setInterval(() => flush(), 120);
+  function closePanels() {
+    root.querySelectorAll('[data-panel]').forEach(panel => { panel.hidden = true; });
+    ['palette-toggle', 'width', 'more-toggle'].forEach(name => find(name).setAttribute('aria-expanded', 'false'));
+  }
+  function togglePanel(name, trigger) {
+    const panel = root.querySelector(`[data-panel="${name}"]`), opening = panel.hidden;
+    closePanels(); panel.hidden = !opening; find(trigger).setAttribute('aria-expanded', String(opening));
+  }
+  function updateBrush() {
+    find('current-color').style.setProperty('--swatch', brush);
+    find('eraser').setAttribute('aria-pressed', String(eraser));
+    find('brush-preview').setAttribute('stroke', brush === '#ffffff' ? '#ccc' : brush);
+    find('brush-preview').setAttribute('stroke-width', String(brushWidth / 2));
+  }
   colors.forEach((color, i) => {
-    const button = document.createElement('button'); button.type = 'button'; button.className = 'draw-color'; button.style.backgroundColor = color;
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'draw-color';
+    const swatch = document.createElement('span'); swatch.className = 'draw-swatch'; swatch.style.setProperty('--swatch', color); button.append(swatch);
     button.setAttribute('aria-label', colorNames[i]); button.setAttribute('aria-pressed', String(i === 0));
-    button.addEventListener('click', () => { brush = color; eraser = false; find('eraser').setAttribute('aria-pressed', 'false');
-      find('colors').querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button))); });
+    button.addEventListener('click', () => { brush = color; eraser = false;
+      find('colors').querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      updateBrush(); closePanels(); find('palette-toggle').focus({ preventScroll: true }); });
     find('colors').append(button);
   });
-  find('eraser').addEventListener('click', () => { eraser = !eraser; find('eraser').setAttribute('aria-pressed', String(eraser)); });
+  [4, 8, 16, 28].forEach((width, i) => {
+    const name = ['细', '中', '粗', '特粗'][i];
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'draw-icon-button';
+    button.setAttribute('aria-label', name); button.setAttribute('aria-pressed', String(width === brushWidth));
+    const dot = document.createElement('span'); dot.className = 'draw-width-dot'; dot.style.setProperty('--dot-size', `${4 + i * 5}px`); button.append(dot);
+    button.addEventListener('click', () => { brushWidth = width; eraser = false; updateBrush();
+      find('width-name').textContent = name; find('width').setAttribute('aria-label', `画笔粗细：${name}`);
+      find('widths').querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      closePanels(); find('width').focus({ preventScroll: true }); });
+    find('widths').append(button);
+  });
+  find('palette-toggle').addEventListener('click', () => togglePanel('palette', 'palette-toggle'));
+  find('width').addEventListener('click', () => togglePanel('brushes', 'width'));
+  find('more-toggle').addEventListener('click', () => togglePanel('more', 'more-toggle'));
+  find('collapse').addEventListener('click', () => {
+    closePanels(); const collapsed = find('toolbar').classList.toggle('is-collapsed');
+    find('collapse').setAttribute('aria-expanded', String(!collapsed));
+    find('collapse').setAttribute('aria-label', collapsed ? '展开工具栏' : '收起工具栏');
+    find('collapse').title = collapsed ? '展开工具栏' : '收起工具栏';
+  });
+  document.addEventListener('pointerdown', event => { if (!find('toolbar').contains(event.target)) closePanels(); });
+  find('eraser').addEventListener('click', () => { eraser = !eraser; updateBrush(); closePanels(); });
+  updateBrush();
   find('undo').addEventListener('click', () => { flush(true); stopPointer(); enqueue('undo'); });
-  find('clear').addEventListener('click', () => { if (confirm('清空本轮画布？对方的画面也会一起清空。')) { flush(true); stopPointer(); enqueue('clear'); } });
+  find('clear').addEventListener('click', () => { if (confirm('清空本轮画布？对方的画面也会一起清空。')) { flush(true); stopPointer(); enqueue('clear'); closePanels(); } });
   find('start').addEventListener('click', () => enqueue('start'));
   find('next').addEventListener('click', () => enqueue('next'));
   find('end').addEventListener('click', () => { if (confirm('结束整局挑战？当前轮会结束，已猜中的成绩会保留。')) { flush(true); stopPointer(); enqueue('end'); } });
@@ -306,39 +394,83 @@
   });
   const workspace = root.querySelector('.draw-workspace');
   const canvasWrap = root.querySelector('.draw-canvas-wrap');
-  let expanded = false, savedScroll = 0;
+  let expanded = false, savedScroll = 0, zoom = 1, panX = 0, panY = 0, fitWidth = 1000;
+  let inertSiblings = [], fullscreenPending = false, nativeFullscreenActive = false;
+  function transformCanvas() {
+    // 允许把边缘移到浮动工具之外，刘海与工具栏不会挡住可画区域。
+    const limitX = Math.max(0, (fitWidth * zoom - viewport.clientWidth) / 2) + (expanded ? 64 : 0);
+    const limitY = Math.max(0, (fitWidth * .7 * zoom - viewport.clientHeight) / 2) + (expanded ? 80 : 0);
+    panX = Math.max(-limitX, Math.min(limitX, panX)); panY = Math.max(-limitY, Math.min(limitY, panY));
+    canvasWrap.style.transform = `translate(-50%, -50%) translate(${panX}px, ${panY}px) scale(${zoom})`;
+    find('zoom').textContent = `${Math.round(zoom * 100)}%`;
+  }
   function sizeCanvas() {
-    if (!expanded) return;
-    // 保持双方相同的 10:7 坐标，不拉伸画面；横竖屏切换不会重置画作。
-    const styles = getComputedStyle(workspace);
-    const paddingY = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
-    const paddingX = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
-    const landscape = matchMedia('(orientation: landscape) and (max-height: 540px)').matches;
-    const available = Math.max(50, workspace.clientHeight - [...workspace.children]
-      .filter(el => el !== canvasWrap && getComputedStyle(el).display !== 'none' && getComputedStyle(el).position !== 'absolute' && (!landscape || !el.matches('[data-toolbar]')))
-      .reduce((sum, el) => sum + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginTop || 0) + parseFloat(getComputedStyle(el).marginBottom || 0), 0) - paddingY);
-    canvasWrap.style.width = `${Math.min(workspace.clientWidth - paddingX - (landscape ? 190 : 0), available * 10 / 7)}px`;
+    flush(true); stopPointer(); fingers.clear(); navigating = false; pinch = null;
+    fitWidth = Math.min(viewport.clientWidth, viewport.clientHeight / .7);
+    canvasWrap.style.width = `${fitWidth}px`;
+    transformCanvas();
   }
+  find('reset-view').addEventListener('click', () => { zoom = 1; panX = panY = 0; transformCanvas(); closePanels(); });
   function expand(value) {
-    flush(true); stopPointer();
-    if (value) savedScroll = window.scrollY;
-    expanded = value;
-    root.classList.toggle('draw-expanded', value);
-    document.body.classList.toggle('draw-screen-open', value);
-    find('expand').textContent = value ? '收起画布' : '大画布';
+    flush(true); stopPointer(); closePanels();
+    if (value === expanded) return;
+    if (value) {
+      savedScroll = window.scrollY;
+      for (let node = workspace; node.parentElement && node !== document.body; node = node.parentElement) {
+        for (const sibling of node.parentElement.children) {
+          if (sibling !== node && sibling instanceof HTMLElement && !sibling.inert) { sibling.inert = true; inertSiblings.push(sibling); }
+        }
+      }
+      workspace.setAttribute('role', 'dialog'); workspace.setAttribute('aria-modal', 'true');
+    } else {
+      inertSiblings.forEach(node => { node.inert = false; }); inertSiblings = [];
+      workspace.removeAttribute('role'); workspace.removeAttribute('aria-modal');
+      if (document.fullscreenElement === workspace) void document.exitFullscreen().catch(() => {});
+    }
+    expanded = value; zoom = 1; panX = panY = 0;
+    root.classList.toggle('draw-expanded', value); document.body.classList.toggle('draw-screen-open', value);
+    find('expand').textContent = value ? '退出全屏' : '全屏画画';
     find('expand').setAttribute('aria-pressed', String(value));
-    find('large-timer').hidden = !value;
-    find('large-hint').textContent = value ? '横屏可获得更大画布' : '手机横屏，画得更舒展';
-    if (value) sizeCanvas();
-    else { canvasWrap.style.width = ''; window.scrollTo(0, savedScroll); }
+    find('large-timer').hidden = !value; find('screen-status').hidden = !value;
+    if (value) find('screen-status').textContent = '单指画画 · 双指缩放移动';
+    find('large-hint').textContent = value ? game.answer : '单指画画 · 双指缩放移动';
+    sizeCanvas();
+    if (!value) { window.scrollTo(0, savedScroll); find('expand').focus({ preventScroll: true }); }
   }
-  find('expand').addEventListener('click', () => expand(!expanded));
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && expanded) expand(false); });
-  new ResizeObserver(sizeCanvas).observe(workspace);
+  find('expand').addEventListener('click', async () => {
+    if (fullscreenPending) return;
+    const entering = !expanded; expand(entering);
+    if (entering && workspace.requestFullscreen && document.fullscreenEnabled) {
+      fullscreenPending = true;
+      try {
+        await workspace.requestFullscreen();
+        if (!expanded && document.fullscreenElement === workspace) await document.exitFullscreen();
+      } catch { /* 手机浏览器拒绝原生全屏时，保留页面内全屏。 */ }
+      finally { fullscreenPending = false; sizeCanvas(); }
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement === workspace) nativeFullscreenActive = true;
+    else if (nativeFullscreenActive) { nativeFullscreenActive = false; if (expanded) expand(false); }
+    sizeCanvas();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      const panel = root.querySelector('[data-panel]:not([hidden])');
+      if (panel) { closePanels(); event.preventDefault(); }
+      else if (expanded) expand(false);
+    }
+    if (expanded && event.key === 'Tab') {
+      const items = [...workspace.querySelectorAll('button, [tabindex="0"]')].filter(el => !el.disabled && el.getClientRects().length);
+      const first = items[0], last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) { last.focus(); event.preventDefault(); }
+      else if (!event.shiftKey && document.activeElement === last) { first.focus(); event.preventDefault(); }
+    }
+  });
+  new ResizeObserver(sizeCanvas).observe(viewport);
   window.visualViewport?.addEventListener('resize', sizeCanvas);
-  new MutationObserver(() => { if (expanded) sizeCanvas(); }).observe(workspace, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
   document.addEventListener('visibilitychange' , () => {
-    if (document.hidden) { flush(true); stopPointer(); stateController?.abort(); }
+    if (document.hidden) { flush(true); stopPointer(); fingers.clear(); navigating = false; pinch = null; stateController?.abort(); }
     else { forceRefresh = true; schedule(0); }
   });
   const timerInterval = setInterval(updateTimer, 200);

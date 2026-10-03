@@ -14,22 +14,33 @@
     <div class="draw-matchbar"><span data-round>准备开始</span><strong data-score>共同猜中 0 / 6</strong><span class="draw-timer" data-timer aria-label="本轮剩余时间">90 秒</span></div>
     <div class="draw-layout">
         <section class="draw-workspace" aria-labelledby="draw-status">
-            <div class="draw-expand-bar"><span data-large-hint>手机横屏，画得更舒展</span><strong data-large-timer hidden></strong><button type="button" class="draw-tool" data-expand aria-pressed="false">大画布</button></div>
+            <div class="draw-expand-bar"><span data-large-hint>单指画画 · 双指缩放移动</span><strong data-large-timer hidden></strong><button type="button" class="draw-tool" data-expand aria-pressed="false">全屏画画</button></div>
             <div class="draw-status"><div><h2 id="draw-status" data-status role="status" aria-live="polite">正在连接…</h2><p data-hint>双方登录各自账号，打开此页面即可一起玩。</p></div><span class="draw-role" data-role>两个人的画室</span></div>
             <div class="draw-secret" data-secret hidden><span>本轮你要画</span><strong data-answer></strong><small>只有你能看到 · 请用图画表达，不要直接写答案</small></div>
             <div class="draw-choices" data-choices hidden aria-label="选择本轮要画的词"></div>
             <div class="draw-toolbar" data-toolbar hidden aria-label="画笔工具">
-                <div class="draw-colors" data-colors></div>
-                <label>粗细 <select data-width aria-label="画笔粗细"><option value="4">细</option><option value="8" selected>中</option><option value="16">粗</option><option value="28">特粗</option></select></label>
-                <button type="button" class="draw-tool" data-eraser aria-pressed="false">橡皮</button>
-                <button type="button" class="draw-tool" data-undo>撤回</button>
-                <button type="button" class="draw-tool" data-clear>清空</button>
+                <div class="draw-tool-items" data-tool-items>
+                    <button type="button" class="draw-icon-button" data-palette-toggle aria-label="选择颜色" title="颜色" aria-expanded="false" aria-controls="draw-palette"><span class="draw-swatch" data-current-color></span></button>
+                    <button type="button" class="draw-icon-button" data-width aria-label="画笔粗细：中" title="画笔粗细" aria-expanded="false" aria-controls="draw-brushes">@Icon("pen-line")</button>
+                    <button type="button" class="draw-icon-button" data-eraser aria-label="橡皮" title="橡皮" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 20-5-5a2 2 0 0 1 0-3L13 2a2 2 0 0 1 3 0l6 6a2 2 0 0 1 0 3l-9 9H8Z M7 8l9 9 M13 20h9"/></svg></button>
+                    <button type="button" class="draw-icon-button" data-undo aria-label="撤回上一笔" title="撤回上一笔">@Icon("undo-2")</button>
+                    <button type="button" class="draw-icon-button" data-more-toggle aria-label="更多工具" title="更多工具" aria-expanded="false" aria-controls="draw-more">@Icon("ellipsis")</button>
+                </div>
+                <button type="button" class="draw-icon-button draw-collapse" data-collapse aria-label="收起工具栏" title="收起工具栏" aria-expanded="true" aria-controls="draw-tool-panels">@Icon("chevron-down")</button>
+                <div id="draw-tool-panels">
+                    <div class="draw-popover" id="draw-palette" data-panel="palette" hidden><p>选择颜色</p><div class="draw-colors" data-colors></div></div>
+                    <div class="draw-popover" id="draw-brushes" data-panel="brushes" hidden><p>画笔粗细 <span data-width-name>中</span></p><div class="draw-widths" data-widths></div><svg class="draw-brush-preview" viewBox="0 0 180 36" aria-label="笔迹预览"><path data-brush-preview d="M12 24 Q45 2 82 18 T168 12" fill="none" stroke-linecap="round" /></svg></div>
+                    <div class="draw-popover draw-more" id="draw-more" data-panel="more" hidden><button type="button" class="draw-tool" data-reset-view>复位画布 <span data-zoom>100%</span></button><button type="button" class="draw-tool" data-clear>@Icon("trash-2") 清空画布</button></div>
+                </div>
             </div>
-            <div class="draw-canvas-wrap">
-                <canvas width="1000" height="700" data-canvas role="img" aria-label="双方共享的画布"></canvas>
-                <canvas width="1000" height="700" data-overlay tabindex="0" aria-label="绘画操作区，请用鼠标或触屏画画"></canvas>
-                <div class="draw-canvas-note" data-canvas-note>一方画出线索，一方猜出答案</div>
+            <div class="draw-viewport" data-viewport>
+                <div class="draw-canvas-wrap">
+                    <canvas width="1000" height="700" data-canvas role="img" aria-label="双方共享的画布"></canvas>
+                    <canvas width="1000" height="700" data-overlay tabindex="0" aria-label="单指画画，双指缩放或移动画布"></canvas>
+                    <div class="draw-canvas-note" data-canvas-note>一方画出线索，一方猜出答案</div>
+                </div>
             </div>
+            <p class="draw-screen-status" data-screen-status role="status" hidden></p>
             <div class="board-caption"><span data-ink-state>画布与猜测自动保存</span><span>每轮 90 秒 · 轮流画猜</span></div>
             <section class="draw-reveal" data-reveal hidden aria-live="polite"><p data-reveal-result></p><h3 data-reveal-answer></h3><button type="button" class="game-button primary" data-next>交换角色，下一轮</button></section>
         </section>

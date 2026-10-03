@@ -35,49 +35,55 @@
     .draw-matchbar { padding: 12px; }
     .draw-guesses { min-height: 35px; }
 }
-/* 大画布使用页面内全屏，手机浏览器无需支持 Fullscreen API。 */
-.draw-expand-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; color: var(--muted); }
-.draw-expand-bar [data-expand] { margin-left: auto; }
+/* 紧凑工具栏：视觉图标 20px，触控热区保留 44px。 */
+.draw-expand-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--muted); font-size: 11px; }
+.draw-expand-bar [data-expand] { margin-left: auto; min-height: 40px; white-space: nowrap; }
 .draw-expand-bar [data-large-timer] { color: var(--pink-dark); white-space: nowrap; }
-.draw-toolbar button, .draw-toolbar select, .draw-expand-bar button { min-height: 44px; }
-.draw-color { width: 36px; min-width: 36px; border-radius: 12px; }
-.draw-colors { gap: 6px; padding: 3px; }
-.draw-screen-open { overflow: hidden; }
-.draw-expanded .draw-workspace { position: fixed; inset: 0; z-index: 2000; height: 100dvh; box-sizing: border-box; border: 0; border-radius: 0; padding: 12px; display: flex; flex-direction: column; overflow: auto; padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
-.draw-expanded .draw-expand-bar { flex-shrink: 0; margin-bottom: 6px; }
-.draw-expanded .draw-status, .draw-expanded .board-caption, .draw-expanded .draw-secret small { display: none; }
-.draw-expanded .draw-secret { flex-shrink: 0; margin-bottom: 6px; padding: 4px 10px; }
-.draw-expanded .draw-secret strong { font-size: 18px; }
-.draw-expanded .draw-canvas-wrap { flex-shrink: 0; align-self: center; margin: auto 0; }
-.draw-expanded .draw-toolbar { order: 2; justify-content: center; flex-shrink: 0; gap: 6px; margin: 8px 0 0; }
-.draw-expanded .draw-reveal { padding: 8px; margin: 6px 0; flex-shrink: 0; }
-.draw-expanded .draw-reveal h3, .draw-expanded .draw-reveal p { margin: 4px; }
+.draw-toolbar { position: relative; display: flex; width: max-content; max-width: 100%; gap: 0; padding: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-sm); z-index: 5; }
+.draw-tool-items { display: flex; }
+.draw-icon-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; flex: 0 0 44px; background: transparent; border: 0; border-radius: 12px; color: var(--ink); cursor: pointer; }
+.draw-icon-button svg { width: 20px; height: 20px; }
+.draw-icon-button[aria-pressed=true], .draw-icon-button[aria-expanded=true]:not(.draw-collapse) { background: var(--pink-softer); color: var(--pink-dark); }
+.draw-icon-button:focus-visible, .draw-color:focus-visible { outline: 2px solid var(--pink-dark); outline-offset: -2px; }
+.draw-swatch { display: block; width: 24px; height: 24px; border-radius: 50%; background: var(--swatch, #30303b); border: 1px solid #7775; }
+.draw-popover { position: absolute; top: calc(100% + 8px); left: 0; width: 208px; padding: 12px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 30px #0002; }
+.draw-popover p { margin: 0 0 8px; font-size: 12px; color: var(--muted); }
+.draw-popover p span { float: right; color: var(--pink-dark); }
+.draw-colors { display: grid; grid-template-columns: repeat(4, 44px); gap: 0; width: auto; }
+.draw-color { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: none; border: 0; border-radius: 10px; }
+.draw-color[aria-pressed=true] { outline: none; }
+.draw-color[aria-pressed=true] .draw-swatch { outline: 2px solid var(--pink-dark); outline-offset: 3px; }
+.draw-widths { display: flex; }
+.draw-width-dot { display: block; width: var(--dot-size); height: var(--dot-size); border-radius: 50%; background: currentColor; }
+.draw-brush-preview { display: block; width: 100%; height: 36px; margin-top: 8px; }
+.draw-more { display: grid; gap: 8px; }
+.draw-more button { min-height: 44px; text-align: left; }
+.draw-more [data-clear] { color: var(--danger); }
+.draw-toolbar.is-collapsed .draw-tool-items { display: none; }
+.draw-toolbar.is-collapsed .draw-collapse { transform: rotate(180deg); }
+.draw-viewport { position: relative; width: 100%; aspect-ratio: 10 / 7; overflow: hidden; border-radius: 12px; background: #eae7e5; }
+.draw-viewport.is-interactive { touch-action: none; overscroll-behavior: contain; user-select: none; -webkit-user-select: none; }
+.draw-canvas-wrap { position: absolute; left: 50%; top: 50%; width: 100%; transform: translate(-50%, -50%); transform-origin: center; }
+.draw-screen-open { overflow: hidden; overscroll-behavior: none; }
+.draw-expanded .draw-workspace { position: fixed; inset: 0; z-index: 2000; height: 100dvh; padding: 0; border: 0; border-radius: 0; overflow: hidden; background: #eae7e5; }
+.draw-expanded .draw-viewport { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; aspect-ratio: auto; }
+.draw-expanded .draw-status, .draw-expanded .board-caption, .draw-expanded .draw-secret { display: none !important; }
+.draw-expanded .draw-expand-bar { position: absolute; top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right)); z-index: 6; margin: 0; padding: 4px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-sm); }
+.draw-expanded [data-large-hint] { min-width: 0; flex: 1; font-size: 14px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.draw-expanded .draw-toolbar { position: absolute; bottom: max(12px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); margin: 0; }
+.draw-expanded .draw-popover { top: auto; bottom: calc(100% + 8px); }
+.draw-expanded .draw-screen-status { position: absolute; top: calc(max(8px, env(safe-area-inset-top)) + 58px); left: 50%; transform: translateX(-50%); z-index: 4; margin: 0; padding: 5px 12px; max-width: 90%; border-radius: 20px; background: var(--surface); color: var(--muted); font-size: 11px; text-align: center; pointer-events: none; }
+.draw-workspace:fullscreen { width: 100%; height: 100%; }
 @media (max-width: 540px) {
     .draw-page { padding-left: 8px; padding-right: 8px; }
     .draw-workspace { padding: 10px 6px; border-radius: 14px; }
-    .draw-toolbar { gap: 6px; }
-    .draw-colors { width: 100%; justify-content: space-between; }
-    .draw-color { width: 32px; min-width: 32px; }
-    .draw-toolbar label { margin-right: auto; }
-    .draw-toolbar select { min-width: 64px; }
     .draw-guess-entry input { font-size: 16px; }
     .draw-page .gomoku-heading .games-eyebrow, .draw-subtitle { display: none; }
-    .draw-expanded .draw-workspace { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
 }
 @media (orientation: landscape) and (max-height: 540px) {
-    .draw-expanded .draw-workspace { padding: 6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left)); }
-    .draw-expanded .draw-secret { position: absolute; top: 10px; left: 30%; width: 35%; margin: 0; }
-    .draw-expanded .draw-secret span { display: none; }
-    .draw-expanded .draw-secret strong { grid-column: 1 / -1; text-align: center; font-size: 16px; }
-    .draw-expanded .draw-toolbar { margin-top: 6px; }
-    .draw-expanded .draw-colors { width: auto; }
-    .draw-expanded .draw-expand-bar { margin-bottom: 4px; }
-}
-@media (orientation: landscape) and (max-height: 540px) {
-    .draw-expanded .draw-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 180px; grid-template-rows: auto minmax(0, 1fr); column-gap: 10px; }
-    .draw-expanded .draw-expand-bar { grid-column: 1 / -1; }
-    .draw-expanded .draw-canvas-wrap { grid-column: 1; grid-row: 2; place-self: center; margin: 0; }
-    .draw-expanded .draw-toolbar { grid-column: 2; grid-row: 2; align-self: center; }
-    .draw-expanded .draw-colors { display: grid; grid-template-columns: repeat(4, 36px); }
-    .draw-expanded .draw-toolbar label { width: 100%; text-align: center; }
+    .draw-expanded .draw-toolbar { left: auto; right: max(8px, env(safe-area-inset-right)); top: 50%; bottom: auto; transform: translateY(-50%); flex-direction: column; }
+    .draw-expanded .draw-tool-items { flex-direction: column; }
+    .draw-expanded .draw-popover { left: auto; right: calc(100% + 8px); top: 50%; bottom: auto; transform: translateY(-50%); }
+    .draw-expanded .draw-expand-bar { right: calc(max(8px, env(safe-area-inset-right)) + 60px); }
+    .draw-expanded .draw-screen-status { top: auto; bottom: 8px; }
 }
