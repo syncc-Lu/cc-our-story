@@ -19,7 +19,8 @@ public sealed class DrawModel(DrawGameService games, DrawCoordinator coordinator
         if (!result.Ok || !wait || (result.Game?.Version ?? 0) != version) return Reply(result);
         var delay = TimeSpan.FromSeconds(20);
         if (result.Game is { Stage: "drawing", EndsAt: { } end } state) {
-            var next = end.AddSeconds(-45) > state.ServerNow ? end.AddSeconds(-45) : end;
+            var halfTime = end.AddSeconds(-state.RoundSeconds / 2.0);
+            var next = halfTime > state.ServerNow ? halfTime : end;
             delay = TimeSpan.FromMilliseconds(Math.Clamp((next - state.ServerNow).TotalMilliseconds, 1, 20000));
         }
         try { await changed.WaitAsync(delay, cancellationToken); }

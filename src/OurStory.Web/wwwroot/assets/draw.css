@@ -87,3 +87,9 @@
     .draw-expanded .draw-expand-bar { right: calc(max(8px, env(safe-area-inset-right)) + 60px); }
     .draw-expanded .draw-screen-status { top: auto; bottom: 8px; }
 }
+
+.draw-duration-setting { display: grid; grid-template-columns: 1fr 90px; align-items: center; gap: 8px; margin: 14px 0; }
+.draw-duration-setting label { font-size: 13px; color: var(--ink); }
+.draw-duration-setting input { width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--surface-soft); color: var(--ink); font: inherit; font-size: 16px; }
+.draw-duration-setting small { grid-column: 1 / -1; font-size: 11px; line-height: 1.6; color: var(--muted); }
+.draw-duration-setting input:disabled { opacity: .65; }

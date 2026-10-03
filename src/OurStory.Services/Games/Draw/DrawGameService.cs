@@ -8,7 +8,8 @@ namespace OurStory.Services.Games.Draw;
 public sealed class DrawGameService(OurStoryDbContext db, DrawPairAccess access, DrawWordService words,
     DrawCoordinator coordinator, TimeProvider time) {
     public const int Rounds = 6;
-    public const int RoundSeconds = 90;
+    public const int MinRoundSeconds = 10;
+    public const int MaxRoundSeconds = 600;
     public static readonly string[] Colors = ["#30303b", "#df728d", "#e85a50", "#e6a23c", "#55a878", "#4a8ecc", "#916bbf", "#ffffff"];
     private static readonly JsonSerializerOptions Json = new();
     private static DrawSession Read(DrawGame game) => JsonSerializer.Deserialize<DrawSession>(game.StateJson, Json)!;
@@ -20,14 +21,14 @@ public sealed class DrawGameService(OurStoryDbContext db, DrawPairAccess access,
         var now = time.GetUtcNow();
         var drawer = session.DrawerId == userId;
         var revealed = session.Stage is "reveal" or "finished";
-        var hint = session.Stage == "drawing" && session.EndsAt <= now.AddSeconds(45);
+        var hint = session.Stage == "drawing" && session.EndsAt <= now.AddSeconds(session.RoundSeconds / 2.0);
         var start = epoch == session.CanvasEpoch && since >= 0 && since <= session.Strokes.Count ? since : 0;
         return new(game.Version, session.RoundId, session.Round, session.Stage, drawer, now, session.EndsAt,
             drawer || revealed ? session.Answer?.Answer : null,
             hint ? session.Answer?.Category : null, hint ? session.Answer?.Answer.EnumerateRunes().Count() : null,
             drawer && session.Stage == "choosing" ? session.Candidates.Select((x, i) => new DrawChoice(i, x.Answer, x.Category, x.Difficulty)).ToArray() : [],
             session.Results.Count(x => x.Correct), session.Results.ToArray(), session.Guesses.ToArray(),
-            session.CanvasEpoch, start, session.Strokes.Count, session.Strokes.Skip(start).ToArray());
+            session.CanvasEpoch, start, session.Strokes.Count, session.Strokes.Skip(start).ToArray(), session.RoundSeconds);
     }
 
     private async Task<bool> SaveAsync(DrawGame game, DrawSession session, bool isNew, CancellationToken ct) {
@@ -103,13 +104,15 @@ public sealed class DrawGameService(OurStoryDbContext db, DrawPairAccess access,
             }
             var isNew = game is null;
             if (command.Action == "start") {
+                if (command.RoundSeconds is < MinRoundSeconds or > MaxRoundSeconds)
+                    return Failure($"每轮时长请输入 {MinRoundSeconds} 到 {MaxRoundSeconds} 秒的整数。");
                 if (session is not null && (session.Stage != "finished" || command.RoundId != session.RoundId)) return Failure("当前对局还未结束，或页面已过期。");
                 var candidates = await CandidatesAsync(pair.RelationshipId, [], ct);
                 if (candidates.Count < 8) return Failure("至少需要 8 个启用的不同词条，请先到后台补充或启用词库。");
                 var first = game?.PlayerTwoId ?? userId;
                 game = new DrawGame { RelationshipId = pair.RelationshipId, PlayerOneId = first,
                     PlayerTwoId = first == userId ? pair.PartnerId : userId, Version = game?.Version ?? 0 };
-                session = new DrawSession { DrawerId = first, Candidates = candidates.Take(3).ToList() };
+                session = new DrawSession { RoundSeconds = command.RoundSeconds, DrawerId = first, Candidates = candidates.Take(3).ToList() };
             } else {
                 if (game is null || session is null) return Failure("请先开始一局。");
                 if (command.RoundId != session.RoundId) return Failure("已经换到新一轮，请按当前画面继续。");
@@ -122,7 +125,7 @@ public sealed class DrawGameService(OurStoryDbContext db, DrawPairAccess access,
                         session.Used.Add(DrawText.Normalize(session.Answer.Answer));
                         session.Used.AddRange(session.Answer.Aliases.Select(DrawText.Normalize));
                         session.Candidates.Clear(); session.Stage = "drawing";
-                        session.EndsAt = time.GetUtcNow().AddSeconds(RoundSeconds);
+                        session.EndsAt = time.GetUtcNow().AddSeconds(session.RoundSeconds);
                         break;
                     case "ink":
                         if (session.DrawerId != userId || session.Stage != "drawing") return Failure("当前不能画画。");

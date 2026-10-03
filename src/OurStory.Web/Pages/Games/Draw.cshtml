@@ -41,7 +41,7 @@
                 </div>
             </div>
             <p class="draw-screen-status" data-screen-status role="status" hidden></p>
-            <div class="board-caption"><span data-ink-state>画布与猜测自动保存</span><span>每轮 90 秒 · 轮流画猜</span></div>
+            <div class="board-caption"><span data-ink-state>画布与猜测自动保存</span><span data-duration-caption>每轮 90 秒 · 轮流画猜</span></div>
             <section class="draw-reveal" data-reveal hidden aria-live="polite"><p data-reveal-result></p><h3 data-reveal-answer></h3><button type="button" class="game-button primary" data-next>交换角色，下一轮</button></section>
         </section>
         <aside class="draw-sidebar">
@@ -50,9 +50,10 @@
                 <form data-guess-form><label for="draw-guess">你的猜测</label><div class="draw-guess-entry"><input id="draw-guess" name="guess" maxlength="48" autocomplete="off" placeholder="输入你想到的答案" disabled><button class="game-button primary" type="submit" data-guess-button disabled>猜一下</button></div><small data-guess-help>轮到猜词时即可输入，不限一次机会。</small></form>
             </section>
             <section class="game-panel"><p class="game-connection" data-connection role="status">正在连接…</p><p class="game-error" data-error role="alert" hidden></p>
+                <div class="draw-duration-setting"><label for="draw-duration">每轮时长（秒）</label><input id="draw-duration" data-duration type="number" inputmode="numeric" min="10" max="600" step="1" value="90" required aria-describedby="draw-duration-help"><small id="draw-duration-help" data-duration-help>10–600 秒，开局后整局固定，半程给提示。</small></div>
                 <div class="game-actions"><button class="game-button primary" type="button" data-start disabled>开始 6 轮挑战</button><button class="game-button" type="button" data-end disabled>结束本局</button><button class="game-button" type="button" data-refresh>重新同步</button><button class="game-button" type="button" data-invite>邀请对方</button></div>
                 <a href="/login?ReturnUrl=%2Fgames%2Fdraw" data-login class="game-login" hidden>重新登录，继续画猜</a>
-                <p class="game-help">开始后画画方三选一，猜词方看不到候选词和答案。45 秒后给出分类和字数提示；猜中或超时后揭晓答案。</p>
+                <p class="game-help">开始后画画方三选一，猜词方看不到候选词和答案。每轮过半时给出分类和字数提示；猜中或超时后揭晓答案。</p>
                 <p><a href="/admin/game-words" class="draw-manage">@Icon("pen-line") 管理你们的专属词库</a></p>
             </section>
             <section class="game-panel" data-summary hidden><h2>这一局的小默契</h2><ol data-results></ol><p class="game-help">一起猜中多少题，都算我们共同的成绩。</p></section>

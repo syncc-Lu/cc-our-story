@@ -21,7 +21,8 @@
   const uuid = () => crypto.randomUUID ? crypto.randomUUID() : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
   const error = message => { find('error').textContent = message || ''; find('error').hidden = !message; };
   const now = () => clockValue + performance.now() - clockReadAt;
-  const remaining = () => game?.endsAt ? Math.max(0, Math.ceil((Date.parse(game.endsAt) - now()) / 1000)) : 90;
+  const roundSeconds = () => game && game.stage !== 'finished' ? game.roundSeconds : (find('duration').validity.valid ? Number(find('duration').value) : 90);
+  const remaining = () => game?.endsAt ? Math.max(0, Math.ceil((Date.parse(game.endsAt) - now()) / 1000)) : roundSeconds();
   const controlBusy = () => (sending && sending.action !== 'ink') || queue.some(x => x.action !== 'ink');
   const canDraw = () => connected && !stopped && !controlBusy() && game?.isDrawer && game.stage === 'drawing' && remaining() > 0 && queue.length < 60;
 
@@ -71,6 +72,7 @@
       }
       strokes = strokes.slice(0, next.strokeBase).concat(next.strokes);
       for (const stroke of next.strokes) pending.delete(stroke.id);
+      if (!game || game.roundId !== next.roundId) find('duration').value = next.roundSeconds;
       game = next;
       clockValue = Date.parse(next.serverNow); clockReadAt = performance.now();
       if (next.stage !== 'drawing') { pending.clear(); stopPointer(); }
@@ -87,6 +89,11 @@
     const stage = game?.stage ?? 'idle';
     const isDrawer = !!game?.isDrawer;
     const busy = !!controlBusy();
+    const configuring = stage === 'idle' || stage === 'finished';
+    find('duration').disabled = !connected || busy || !configuring;
+    if (game && !configuring) find('duration').value = game.roundSeconds;
+    find('duration-help').textContent = configuring ? '10–600 秒，开局后整局固定，半程给提示。' : `本局每轮 ${game.roundSeconds} 秒，下一局可修改。`;
+    find('duration-caption').textContent = `每轮 ${roundSeconds()} 秒 · 轮流画猜`;
     find('expand').hidden = !(isDrawer && stage === 'drawing');
     if (expanded && (!isDrawer || stage !== 'drawing')) expand(false);
     find('round').textContent = game ? `第 ${game.round} / 6 轮` : '准备开始';
@@ -122,10 +129,10 @@
       status.textContent = '准备好，让默契开场'; hint.textContent = '点击开始挑战，另一方打开此页面就能加入。';
     } else if (stage === 'choosing') {
       status.textContent = isDrawer ? '选一个词，画给对方猜' : '对方正在悄悄选词';
-      hint.textContent = isDrawer ? '选定后开始 90 秒计时。想好了再下笔。' : '选好词后画布会自动开放，你不需要刷新。';
+      hint.textContent = isDrawer ? `选定后开始 ${game.roundSeconds} 秒计时。想好了再下笔。` : '选好词后画布会自动开放，你不需要刷新。';
     } else if (stage === 'drawing') {
       status.textContent = isDrawer ? '画出你的奇思妙想' : '看着画，猜猜你想到的词';
-      hint.textContent = game.hintCategory ? `半程提示：${game.hintCategory} · ${game.hintLength} 个字` : '45 秒后会出现分类和字数提示。';
+      hint.textContent = game.hintCategory ? `半程提示：${game.hintCategory} · ${game.hintLength} 个字` : `本轮过半（${game.roundSeconds / 2} 秒）后出现分类和字数提示。`;
     } else if (stage === 'reveal') {
       const result = game.results.find(x => x.round === game.round);
       status.textContent = result?.correct ? '猜中了，我们很有默契！' : '时间到，看看这轮的答案';
@@ -171,7 +178,7 @@
   }
   function updateTimer() {
     const seconds = remaining();
-    find('timer').textContent = game?.stage === 'drawing' ? `${seconds} 秒` : game?.stage === 'reveal' ? '本轮结束' : game?.stage === 'finished' ? '挑战完成' : '90 秒';
+    find('timer').textContent = game?.stage === 'drawing' ? `${seconds} 秒` : game?.stage === 'reveal' ? '本轮结束' : game?.stage === 'finished' ? '挑战完成' : `${roundSeconds()} 秒`;
     find('large-timer').textContent = find('timer').textContent;
     find('timer').classList.toggle('urgent', game?.stage === 'drawing' && seconds <= 15);
     if (game?.stage === 'drawing' && seconds === 0) {
@@ -381,7 +388,11 @@
   updateBrush();
   find('undo').addEventListener('click', () => { flush(true); stopPointer(); enqueue('undo'); });
   find('clear').addEventListener('click', () => { if (confirm('清空本轮画布？对方的画面也会一起清空。')) { flush(true); stopPointer(); enqueue('clear'); closePanels(); } });
-  find('start').addEventListener('click', () => enqueue('start'));
+  find('duration').addEventListener('input', () => { updateTimer(); find('duration-caption').textContent = `每轮 ${roundSeconds()} 秒 · 轮流画猜`; });
+  find('start').addEventListener('click', () => {
+    if (!find('duration').reportValidity()) return;
+    enqueue('start', { roundSeconds: Number(find('duration').value) });
+  });
   find('next').addEventListener('click', () => enqueue('next'));
   find('end').addEventListener('click', () => { if (confirm('结束整局挑战？当前轮会结束，已猜中的成绩会保留。')) { flush(true); stopPointer(); enqueue('end'); } });
   find('guess-form').addEventListener('submit', event => { event.preventDefault(); const input = root.querySelector('#draw-guess');

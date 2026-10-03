@@ -96,6 +96,59 @@ public sealed class DrawGameTests : IAsyncLifetime, IAsyncDisposable {
         Assert.Single((await service.GetAsync(boy.Id)).Game!.Results);
     }
 
+    [Theory]
+    [InlineData(10)]
+    [InlineData(121)]
+    [InlineData(600)]
+    public async Task CustomDurationPersistsAndControlsHintDeadlineAndFollowingRounds(int seconds) {
+        var start = Command("start"); start.RoundSeconds = seconds;
+        var state = (await service.ActAsync(boy.Id, start)).Game!;
+        Assert.Equal(seconds, state.RoundSeconds);
+        state = await Choose(boy.Id, state);
+        Assert.Equal(time.GetUtcNow().AddSeconds(seconds), state.EndsAt);
+        await using var fresh = Open();
+        Assert.Equal(seconds, (await GameService(fresh).GetAsync(girl.Id)).Game!.RoundSeconds);
+        time.Advance(TimeSpan.FromSeconds(seconds / 2.0 - .1));
+        Assert.Null((await service.GetAsync(girl.Id)).Game!.HintCategory);
+        time.Advance(TimeSpan.FromSeconds(.1));
+        Assert.NotNull((await service.GetAsync(girl.Id)).Game!.HintCategory);
+        var mutate = Command("guess", state); mutate.RoundSeconds = 600; mutate.Text = "wrong";
+        Assert.Equal(seconds, (await service.ActAsync(girl.Id, mutate)).Game!.RoundSeconds);
+        time.Advance(TimeSpan.FromSeconds(seconds / 2.0));
+        var expired = (await service.GetAsync(boy.Id)).Game!;
+        Assert.Equal("reveal", expired.Stage);
+        var next = (await service.ActAsync(boy.Id, Command("next", expired))).Game!;
+        next = await Choose(girl.Id, next);
+        Assert.Equal(seconds, next.RoundSeconds);
+        Assert.Equal(time.GetUtcNow().AddSeconds(seconds), next.EndsAt);
+        var ended = (await service.ActAsync(boy.Id, Command("end", next))).Game!;
+        var restart = Command("start", ended); restart.RoundSeconds = 75;
+        Assert.Equal(75, (await service.ActAsync(boy.Id, restart)).Game!.RoundSeconds);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(0)]
+    [InlineData(9)]
+    [InlineData(601)]
+    public async Task InvalidDurationDoesNotStartGame(int seconds) {
+        var command = Command("start"); command.RoundSeconds = seconds;
+        Assert.False((await service.ActAsync(boy.Id, command)).Ok);
+        Assert.Null((await service.GetAsync(boy.Id)).Game);
+    }
+
+    [Fact]
+    public async Task LegacySavedGameWithoutDurationDefaultsToNinetySeconds() {
+        var state = await Choose(boy.Id, await Start());
+        var entity = await db.Set<DrawGame>().SingleAsync();
+        var json = System.Text.Json.Nodes.JsonNode.Parse(entity.StateJson)!;
+        json.AsObject().Remove("RoundSeconds"); entity.StateJson = json.ToJsonString();
+        await db.SaveChangesAsync();
+        await using var fresh = Open();
+        var restored = (await GameService(fresh).GetAsync(girl.Id)).Game!;
+        Assert.Equal(90, restored.RoundSeconds); Assert.Equal(state.EndsAt, restored.EndsAt);
+    }
+
     [Fact]
     public async Task SixRoundsAlternateRolesAvoidRepeatWordsAndFinishWithSharedScore() {
         var state = await Start(); var used = new HashSet<string>();
