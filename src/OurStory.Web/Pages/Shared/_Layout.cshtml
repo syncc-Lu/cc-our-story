@@ -62,6 +62,8 @@
         <link rel="stylesheet" href="@Assets.Url(style)">
     }
 
+    @await RenderSectionAsync("Styles", required: false)
+
     <script>
             (function() {
                 const root = document.documentElement;

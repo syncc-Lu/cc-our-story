@@ -87,6 +87,11 @@ public static class ServiceCollectionExtensions {
         _ = services.AddScoped<OurStory.Services.Mailbox.MailboxService>();
         _ = services.AddSingleton<OurStory.Services.Games.GomokuUpdates>();
         _ = services.AddScoped<OurStory.Services.Games.GomokuService>();
+        _ = services.AddSingleton(TimeProvider.System);
+        _ = services.AddSingleton<OurStory.Services.Games.Draw.DrawCoordinator>();
+        _ = services.AddScoped<OurStory.Services.Games.Draw.DrawPairAccess>();
+        _ = services.AddScoped<OurStory.Services.Games.Draw.DrawWordService>();
+        _ = services.AddScoped<OurStory.Services.Games.Draw.DrawGameService>();
         _ = services.AddSingleton(new CycleAnalysisOptions());
         _ = services.AddSingleton<CycleWriteCoordinator>();
         _ = services.AddSingleton<ICycleAnalysisService, RuleBasedCycleAnalysisService>();

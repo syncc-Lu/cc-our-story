@@ -1,0 +1,28 @@
+@page "/admin/game-words"
+@model OurStory.Web.Areas.Admin.Pages.GameWords.IndexModel
+@{
+    ViewData["Title"] = "画猜词库";
+    ViewData["ActiveMenu"] = "game-words";
+    ViewData["Eyebrow"] = "OUR WORD COLLECTION";
+}
+<section class="admin-panel">
+    <h2>给你们准备的词库</h2>
+    <p class="admin-panel-hint">内置 300 个词，可修改答案、别名和难度。新增的专属词仅用于你们的对局；有专属词时优先提供一个候选，其余从可用词库补齐。请至少保留 8 个启用词。</p>
+    <p><a class="btn" href="/admin/game-words/edit">@Icon("plus") 添加专属词</a> <a class="btn btn-ghost" href="/games/draw">去玩你画我猜</a></p>
+    <form method="get"><label class="field"><span>搜索答案、分类或别名</span><input asp-for="Search" maxlength="100" placeholder="例如：雨伞、情侣日常"></label><button class="btn btn-ghost" type="submit">搜索</button></form>
+    <p class="admin-panel-hint">共 @Model.Items.Total 个词 · 第 @Model.Items.Page 页</p>
+    @foreach (var word in Model.Items.Items) {
+        <article class="admin-panel">
+            <h3>@word.Answer <small>· @(word.SourceKey.StartsWith("builtin:", StringComparison.Ordinal) ? "内置" : "专属") · @(word.Enabled ? "已启用" : "已停用")</small></h3>
+            <p>@word.Category · @(word.Difficulty switch { 1 => "简单", 2 => "适中", _ => "挑战" })</p>
+            @if (!string.IsNullOrEmpty(word.Aliases)) { <p>也接受：@word.Aliases.Replace('\n', '、')</p> }
+            <a class="btn btn-ghost btn-small" href="/admin/game-words/edit?id=@word.Id">编辑</a>
+            <form method="post" asp-page-handler="Change" style="display:inline-block"><input type="hidden" name="id" value="@word.Id"><button class="btn btn-ghost btn-small" type="submit">@(word.Enabled ? "停用" : "启用")</button></form>
+            <form method="post" asp-page-handler="Change" style="display:inline-block" data-confirm="删除后这个词不再参与新一轮选词，确定删除吗？"><input type="hidden" name="id" value="@word.Id"><input type="hidden" name="delete" value="true"><button class="btn btn-danger btn-small" type="submit">删除</button></form>
+        </article>
+    }
+    <nav aria-label="词库翻页">
+        @if (Model.Items.Page > 1) { <a class="btn btn-ghost" href="/admin/game-words?p=@(Model.Items.Page - 1)&Search=@Uri.EscapeDataString(Model.Search ?? "")">上一页</a> }
+        @if (Model.Items.Page * 20 < Model.Items.Total) { <a class="btn btn-ghost" href="/admin/game-words?p=@(Model.Items.Page + 1)&Search=@Uri.EscapeDataString(Model.Search ?? "")">下一页</a> }
+    </nav>
+</section>

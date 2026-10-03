@@ -1,0 +1,18 @@
+@page "/admin/game-words/edit"
+@model OurStory.Web.Areas.Admin.Pages.GameWords.EditModel
+@{
+    ViewData["Title"] = Model.WordId == 0 ? "添加专属词" : "编辑画猜词条";
+    ViewData["ActiveMenu"] = "game-words";
+    ViewData["BackUrl"] = "/admin/game-words";
+    ViewData["BackText"] = "返回词库";
+}
+<form method="post" class="admin-panel" data-dirty-guard>
+    <div asp-validation-summary="All" class="admin-error"></div>
+    <p class="admin-panel-hint">选容易画、双方都知道的内容。别名用于避免“单车”和“自行车”意思相同却判错；修改不会影响已选出的本轮题目。</p>
+    <label class="field"><span>答案（最多 24 个字）</span><input asp-for="Input.Answer" maxlength="48" required placeholder="例如：自行车"></label>
+    <label class="field"><span>可接受别名（每行一个，最多 10 个）</span><textarea asp-for="Input.Aliases" rows="4" maxlength="500" placeholder="单车&#10;脚踏车"></textarea></label>
+    <label class="field"><span>分类（会作为半程提示）</span><input asp-for="Input.Category" maxlength="20" required placeholder="专属回忆"></label>
+    <label class="field"><span>难度</span><select asp-for="Input.Difficulty"><option value="1">简单</option><option value="2">适中</option><option value="3">挑战</option></select></label>
+    <label class="check"><input asp-for="Input.Enabled">启用这个词</label>
+    <p><button type="submit" class="btn">保存词条</button> <a href="/admin/game-words" class="btn btn-ghost">返回</a></p>
+</form>

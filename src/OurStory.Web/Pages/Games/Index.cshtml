@@ -1,9 +1,11 @@
 @page "/games"
+@inject AssetVersionProvider Assets
 @{
     ViewData["Title"] = "一起玩";
     ViewData["ActiveNav"] = "games";
     ViewData["Bundle"] = "games";
 }
+@section Styles { <link rel="stylesheet" href="@Assets.Url("assets/draw.css")"> }
 <main id="main" class="games-page">
     <header class="games-heading">
         <p class="games-eyebrow">A LITTLE PLAYTIME</p>
@@ -22,6 +24,13 @@
                 <p>一人一色，轮流落子。先把五颗棋子连成一线，就赢下这一局。</p>
                 <div class="game-card-footer"><span>@Icon("lock") 情侣专属对局</span><strong>开始下棋 @Icon("arrow-right")</strong></div>
             </div>
+        </a>
+        <a class="game-card" href="/games/draw">
+            <div class="game-preview draw-game-preview" aria-hidden="true">
+                <svg viewBox="0 0 240 190"><path d="M60 142c-8-16-13-39-10-61l16-35 26 22c17-8 34-8 51 0l25-22 16 35c4 24-2 48-12 61-27 23-83 23-112 0Z"/><path d="M86 100h1m55 0h1m-32 18 7 5 7-5m-7 5v12m0-3c-8 9-16 9-23 0m23 0c8 9 16 9 23 0M47 115l35 5m-40 8 36 2m80-10 35-5m-34 15 37-2"/><path d="m186 45 8-13m8 28 17-2m-28 109 16-18"/></svg>
+                <span class="game-badge">画画猜词 · 合作挑战</span>
+            </div>
+            <div class="game-card-body"><p class="games-eyebrow">02 / DRAW &amp; GUESS</p><h2>你画我猜</h2><p>一人画出脑海里的词，一人接住天马行空的线索。六轮挑战，一起积攒默契。</p><div class="game-card-footer"><span>@Icon("pen-line") 300 个词 + 专属词库</span><strong>打开画室 @Icon("arrow-right")</strong></div></div>
         </a>
     </section>
     <p class="games-footnote">双方登录各自账号，即可在不同设备上一起玩。</p>

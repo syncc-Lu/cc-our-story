@@ -1,0 +1,2154 @@
+[
+  {
+    "Key": "builtin:a86eaeb98f4ced93",
+    "Answer": "雨伞",
+    "Aliases": [
+      "伞"
+    ],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:aeb4c474be567690",
+    "Answer": "牙刷",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1bc009fa87e0dae1",
+    "Answer": "耳机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c48625607f03389a",
+    "Answer": "书包",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e4919ea342ea1809",
+    "Answer": "眼镜",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c16356377863fc8b",
+    "Answer": "台灯",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:617bcd49fd62f050",
+    "Answer": "闹钟",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6d132744a95cf394",
+    "Answer": "钥匙",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:003e6674d0fe2cf6",
+    "Answer": "剪刀",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f77e30ee1aed8819",
+    "Answer": "铅笔",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b38d7276de0365e5",
+    "Answer": "橡皮",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3e587e9a1742d5b4",
+    "Answer": "尺子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:196bf4ec27821c84",
+    "Answer": "水杯",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ed52a121f77103a2",
+    "Answer": "水壶",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:033dab10685d633a",
+    "Answer": "碗筷",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:72407ec665b596b8",
+    "Answer": "勺子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c2d259d7c66746ff",
+    "Answer": "叉子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:67962637e95512e4",
+    "Answer": "平底锅",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f8781a5f97ced96e",
+    "Answer": "冰箱",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6acfa1db6a625946",
+    "Answer": "洗衣机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:adca1609663402ad",
+    "Answer": "电视机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1bb4d940c799217d",
+    "Answer": "电风扇",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9cd8dac6a84ddb7a",
+    "Answer": "吹风机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:2e07333c8c740978",
+    "Answer": "手机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dacf0702602643bb",
+    "Answer": "相机",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d48f1dcf88d2ca0d",
+    "Answer": "电脑",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:33d3ef284743dbd1",
+    "Answer": "遥控器",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e1a4f5479f90d5f5",
+    "Answer": "镜子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:fd5d96b3d730bb83",
+    "Answer": "梳子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c471aae1a90d63b1",
+    "Answer": "毛巾",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:84fc114618ec7257",
+    "Answer": "枕头",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:64569c7e08abbee1",
+    "Answer": "被子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6053e0a7e287f575",
+    "Answer": "拖鞋",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f045b9ca8f63f35d",
+    "Answer": "帽子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:47462640e72be913",
+    "Answer": "围巾",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d3db5e56061937d2",
+    "Answer": "手套",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:2ca95f839d44809f",
+    "Answer": "袜子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0232c7b8321b0349",
+    "Answer": "裤子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ee9ce792c80d0846",
+    "Answer": "裙子",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:66f892caca60d9f5",
+    "Answer": "衬衫",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6f5578490e116e7d",
+    "Answer": "纽扣",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:91e04277e6d07dff",
+    "Answer": "拉链",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b727ee62fc58ed43",
+    "Answer": "手表",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:77b187d6e2f54739",
+    "Answer": "戒指",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f0286578ebbddbdc",
+    "Answer": "项链",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a9c3c4e7077dad35",
+    "Answer": "气球",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:7abab69f06e9585b",
+    "Answer": "蜡烛",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:487957a64d7119b0",
+    "Answer": "礼物盒",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d7b7407bf306922f",
+    "Answer": "垃圾桶",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3b91114e025d9c3f",
+    "Answer": "扫把",
+    "Aliases": [],
+    "Category": "日常物品",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a810bf845a307382",
+    "Answer": "猫",
+    "Aliases": [
+      "猫咪",
+      "小猫"
+    ],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:cecd675a4c3cb00d",
+    "Answer": "狗",
+    "Aliases": [
+      "狗狗",
+      "小狗"
+    ],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:02ea6e1b01e9fc52",
+    "Answer": "兔子",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:983c9a436768807d",
+    "Answer": "熊猫",
+    "Aliases": [
+      "大熊猫"
+    ],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ccededd38e9c1ea6",
+    "Answer": "老虎",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e7c20034f075c68a",
+    "Answer": "狮子",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9da4b5a81abc151e",
+    "Answer": "大象",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:820851c2c2102533",
+    "Answer": "长颈鹿",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:329b1290d7a178d5",
+    "Answer": "斑马",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d0d5cf9f92f5a1e9",
+    "Answer": "猴子",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3ab10c41864563d4",
+    "Answer": "猩猩",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0a93e4ffe2a99cb1",
+    "Answer": "狐狸",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dc5e4269b015ea98",
+    "Answer": "狼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ee8372513bc1a9d1",
+    "Answer": "松鼠",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d053cde714b0f23e",
+    "Answer": "刺猬",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:92fce7654a6f2375",
+    "Answer": "河马",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f5f691fd04836ff9",
+    "Answer": "犀牛",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:71fd7021ae2ef76f",
+    "Answer": "袋鼠",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d26f788b571dc1bb",
+    "Answer": "考拉",
+    "Aliases": [
+      "树袋熊"
+    ],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:60cc6a0a6da5d3b1",
+    "Answer": "北极熊",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:5edbaf078d46486b",
+    "Answer": "企鹅",
+    "Aliases": [
+      "小企鹅"
+    ],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a2b1abc5a1cbc967",
+    "Answer": "鸭子",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e62503dbd7636b52",
+    "Answer": "公鸡",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3af45aee6db25540",
+    "Answer": "孔雀",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f492262e98482497",
+    "Answer": "天鹅",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c185ad00c7d08799",
+    "Answer": "猫头鹰",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:410227943bae35a8",
+    "Answer": "鹦鹉",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6610dc46f48daf55",
+    "Answer": "麻雀",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:476588ce1ba32433",
+    "Answer": "鸽子",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:be9fb46fc4975fea",
+    "Answer": "啄木鸟",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d2f814bc1cb1b007",
+    "Answer": "鲨鱼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:50d06054a2aa13c9",
+    "Answer": "海豚",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ec7a304d11a88aa7",
+    "Answer": "鲸鱼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ae1d91f7dc68ff3c",
+    "Answer": "章鱼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e47c329abe9b10b8",
+    "Answer": "水母",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:004d28b1e009dcd8",
+    "Answer": "海星",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3efc0d87f78ee263",
+    "Answer": "螃蟹",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1102ded688a594d5",
+    "Answer": "龙虾",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:119e0526f5ff4294",
+    "Answer": "海龟",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:18b1ee5bd5a10c01",
+    "Answer": "鳄鱼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1d70fe1c42fde24a",
+    "Answer": "青蛙",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e49587b1da36007f",
+    "Answer": "蛇",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:8bc0f2538d5e3055",
+    "Answer": "蜗牛",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f7c9627a674bb8f4",
+    "Answer": "蝴蝶",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:395dcc6ad3fd8d22",
+    "Answer": "蜜蜂",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:7853225b8ee4cd6c",
+    "Answer": "蚂蚁",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0053a539b3dba025",
+    "Answer": "蜘蛛",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:379038ffc88b9616",
+    "Answer": "蜻蜓",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b2b532b958174216",
+    "Answer": "蝙蝠",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:20ad24fb86251e32",
+    "Answer": "骆驼",
+    "Aliases": [],
+    "Category": "动物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0b8c4bb849e089dd",
+    "Answer": "蛋糕",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:7ea01af14f934746",
+    "Answer": "冰淇淋",
+    "Aliases": [
+      "冰激凌",
+      "雪糕"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:cff82d4e354fb41e",
+    "Answer": "汉堡",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:d4bb9332fd766d70",
+    "Answer": "薯条",
+    "Aliases": [
+      "炸薯条"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0e1865390696e7be",
+    "Answer": "披萨",
+    "Aliases": [
+      "比萨"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:945d949b00c2c4b7",
+    "Answer": "热狗",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b4bf241cd10ee181",
+    "Answer": "面包",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:828d5640ee422883",
+    "Answer": "三明治",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:56ad9259e3e1c67d",
+    "Answer": "饼干",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:73b9e5c797336213",
+    "Answer": "巧克力",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:782dcecb3a41db9e",
+    "Answer": "棒棒糖",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f96b783946d36b12",
+    "Answer": "糖葫芦",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:5305d3b2b3f1648f",
+    "Answer": "爆米花",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:7d17b8d9cb58de7a",
+    "Answer": "甜甜圈",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f00ffdf5cd1b6828",
+    "Answer": "饺子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:787d89bb2ba8a2c6",
+    "Answer": "包子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0b5480e007c777a7",
+    "Answer": "面条",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e233a13a49e51106",
+    "Answer": "米饭",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:87ba8cbb50fabc4e",
+    "Answer": "粽子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dae9a3d28e2962dc",
+    "Answer": "月饼",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:80ab3590f6610e7d",
+    "Answer": "汤圆",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1c21b306263d2cfd",
+    "Answer": "油条",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:db52a7d37b7ebb35",
+    "Answer": "煎饼",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:8d56ca5e36ec8d4f",
+    "Answer": "火锅",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:5691a276aac242e7",
+    "Answer": "烧烤",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b66b04c2509a7c34",
+    "Answer": "寿司",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:bd97b98d310f774e",
+    "Answer": "鸡腿",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:763f31ff64f9377e",
+    "Answer": "荷包蛋",
+    "Aliases": [
+      "煎蛋"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3e3f03caa0435a00",
+    "Answer": "西瓜",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:50537dab76505dfc",
+    "Answer": "苹果",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dbf9f9c94fc90b7c",
+    "Answer": "香蕉",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c76f6a79f6dbcf63",
+    "Answer": "草莓",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ae86f9a1daef052f",
+    "Answer": "葡萄",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:1e93a661562a8926",
+    "Answer": "菠萝",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0fe9ed3a6b78600f",
+    "Answer": "桃子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a5a79a17f934dde7",
+    "Answer": "梨",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c8d3209aaa4aaf12",
+    "Answer": "橙子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:2e2eadd9e41c4e05",
+    "Answer": "柠檬",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9f1aa4ba71d8a145",
+    "Answer": "樱桃",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b8246e4fd8938af7",
+    "Answer": "芒果",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:eb680c32dd8ab6d1",
+    "Answer": "榴莲",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:7e29ba7e06c2ccf9",
+    "Answer": "椰子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:bb6da11cdcdf24ad",
+    "Answer": "西红柿",
+    "Aliases": [
+      "番茄"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dd1a68cb2c35fb78",
+    "Answer": "胡萝卜",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e1337e15ca73d20d",
+    "Answer": "黄瓜",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:8ac7c1f48e3134b0",
+    "Answer": "茄子",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dfa4670a83c67131",
+    "Answer": "玉米",
+    "Aliases": [
+      "苞米"
+    ],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9519349f65a7addd",
+    "Answer": "蘑菇",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:fc12e809f6355354",
+    "Answer": "辣椒",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:85bc0873e2450c0b",
+    "Answer": "南瓜",
+    "Aliases": [],
+    "Category": "食物",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b4ffef701723d1f3",
+    "Answer": "刷牙",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:11a125593d9c7476",
+    "Answer": "洗脸",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4c0daafbd3be4bb3",
+    "Answer": "洗头",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:81251d98367d0ff2",
+    "Answer": "洗澡",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:39712e9368a8e037",
+    "Answer": "做饭",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:a94621d66053a3d1",
+    "Answer": "洗碗",
+    "Aliases": [
+      "刷碗"
+    ],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:af7d9826708fce0a",
+    "Answer": "扫地",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e814d1afbbf0fd22",
+    "Answer": "拖地",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d9938dab5b825cc5",
+    "Answer": "晾衣服",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:2e871e47876b6567",
+    "Answer": "叠衣服",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:9f805978dd250981",
+    "Answer": "看书",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:15bbb9e233aeabfc",
+    "Answer": "写字",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:0f7385593fb1b634",
+    "Answer": "画画",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:86d347aaa30d1b43",
+    "Answer": "唱歌",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d345d9a2fbf60ae0",
+    "Answer": "跳舞",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:463d9ca5b9a939a0",
+    "Answer": "弹钢琴",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:0bd3759a6fb8a88f",
+    "Answer": "拉小提琴",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e5c54bd7d19f70f5",
+    "Answer": "打鼓",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:f1ca886dbe83db58",
+    "Answer": "吹笛子",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6e3a10ade7c74955",
+    "Answer": "拍照",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:0147dc31ac1357bf",
+    "Answer": "钓鱼",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:f864303afb4e4a85",
+    "Answer": "游泳",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:591052c733499bad",
+    "Answer": "跑步",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:203cc8f947e2e41a",
+    "Answer": "跳绳",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:5386f36a02953218",
+    "Answer": "踢足球",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d0f7307dd4e2b7f6",
+    "Answer": "打篮球",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:146b9e09dfd08e1f",
+    "Answer": "打羽毛球",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d2136e5251fbfd67",
+    "Answer": "打乒乓球",
+    "Aliases": [
+      "打乒乓"
+    ],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:92883f83be7c1e32",
+    "Answer": "骑自行车",
+    "Aliases": [
+      "骑单车",
+      "骑脚踏车"
+    ],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:b483f5784c015c14",
+    "Answer": "滑滑板",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6ae9b614455e2e43",
+    "Answer": "滑冰",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:5e6dbb1fcc4e27af",
+    "Answer": "滑雪",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:849f9ce9f688ba33",
+    "Answer": "爬山",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e86aae75fd0db045",
+    "Answer": "露营",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6d069379363352dd",
+    "Answer": "野餐",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:2662eea552076136",
+    "Answer": "放风筝",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:8e473b074a46fb0a",
+    "Answer": "堆雪人",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:5148a2570b9437eb",
+    "Answer": "打雪仗",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:02e493038d21faf3",
+    "Answer": "浇花",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6c64c2d6b01f0fdf",
+    "Answer": "种树",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4bd55aeba6670176",
+    "Answer": "遛狗",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:ab745c2d91e6f6c9",
+    "Answer": "喂猫",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:b38a4b4c3335f2d4",
+    "Answer": "睡觉",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:111c0b80deb898ca",
+    "Answer": "打哈欠",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:deafdd96edaf59af",
+    "Answer": "打喷嚏",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:ad325e23c01033dd",
+    "Answer": "刷手机",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:a5b32b91d57a88a4",
+    "Answer": "看电视",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e489e4ef81ec1953",
+    "Answer": "赶公交",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:117c113c3b45cf89",
+    "Answer": "排队",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:840df6bbbe282b1f",
+    "Answer": "迷路",
+    "Aliases": [],
+    "Category": "动作场景",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:5c313602f7beb485",
+    "Answer": "太阳",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:917705b6ba5e02dd",
+    "Answer": "月亮",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:6a9fec7faf975f2e",
+    "Answer": "星星",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:5f916af93041cdca",
+    "Answer": "彩虹",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3999ce0b9ebb3fa6",
+    "Answer": "乌云",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9f44f2cb1b212ebb",
+    "Answer": "雨滴",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:4c1d79e56f4a5428",
+    "Answer": "雪花",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a8c1b5b5b172b128",
+    "Answer": "闪电",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3de63d961d58ce0b",
+    "Answer": "龙卷风",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:dc749837f4e08a5a",
+    "Answer": "火山",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c3bb797acf2abad1",
+    "Answer": "雪山",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:01761d7b169daace",
+    "Answer": "瀑布",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:eebe4a446561e818",
+    "Answer": "河流",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a5641a09239161fd",
+    "Answer": "大海",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:cdae730e9989166e",
+    "Answer": "沙滩",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:4fbf406572d59250",
+    "Answer": "沙漠",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:3bfbf21e2f002bc2",
+    "Answer": "森林",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ebb0f4b8661e9004",
+    "Answer": "竹子",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f7daa331959541c0",
+    "Answer": "松树",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:126bfa9e956c2c50",
+    "Answer": "柳树",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:fef63ae42f14813f",
+    "Answer": "向日葵",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a6664df1efc880c7",
+    "Answer": "玫瑰",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:626f66d969140d50",
+    "Answer": "荷花",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c576edfb8ff5d50e",
+    "Answer": "仙人掌",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:bc236402358a8be3",
+    "Answer": "蒲公英",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a4bc0bb9b7da608c",
+    "Answer": "樱花",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:9f97fe4f8cf988cf",
+    "Answer": "枫叶",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:557e69ad7afae4b0",
+    "Answer": "贝壳",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a1aca9fd68a97328",
+    "Answer": "石头",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a637fb3627eedc54",
+    "Answer": "山洞",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a38b0657f4edcfea",
+    "Answer": "房子",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f6f854a2bc966f15",
+    "Answer": "城堡",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c499ec83c91d203a",
+    "Answer": "灯塔",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:8da7ebed00354fe0",
+    "Answer": "桥梁",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b30e856c936fa2c6",
+    "Answer": "帐篷",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:f1910650c9d12548",
+    "Answer": "摩天轮",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:974d260fe95ce1d5",
+    "Answer": "过山车",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:adb722d55e37357c",
+    "Answer": "旋转木马",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:e62c7a26d2130b92",
+    "Answer": "热气球",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c05f7cd6ed3587a2",
+    "Answer": "飞机",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:341394deda2bf631",
+    "Answer": "直升机",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b4772164ebce8d9b",
+    "Answer": "火箭",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b28ef478f64e6d97",
+    "Answer": "宇宙飞船",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:228e2ed446e684a3",
+    "Answer": "火车",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:b8466cd555e68992",
+    "Answer": "地铁",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:c7a3de26eb057205",
+    "Answer": "公交车",
+    "Aliases": [
+      "公共汽车",
+      "巴士"
+    ],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:a009d2a251780ef1",
+    "Answer": "出租车",
+    "Aliases": [
+      "计程车",
+      "的士"
+    ],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:837ac1a20cb70278",
+    "Answer": "消防车",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:63d2ebeaf5547155",
+    "Answer": "救护车",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:0b8526780a1b8256",
+    "Answer": "帆船",
+    "Aliases": [],
+    "Category": "自然出行",
+    "Difficulty": 1
+  },
+  {
+    "Key": "builtin:ed8990cb057b2ddb",
+    "Answer": "牵手",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:f54741449f2e0176",
+    "Answer": "拥抱",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4120fadc5cf5c6b1",
+    "Answer": "亲吻",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:390161338aed5f78",
+    "Answer": "约会",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:bb2925ec3998b4e8",
+    "Answer": "求婚",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:ed7486a07a29fff1",
+    "Answer": "结婚",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:24c8fca13f093fc5",
+    "Answer": "看电影",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:a12693d42292b86d",
+    "Answer": "逛街",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e751bca25e1fc515",
+    "Answer": "旅行",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:2ae6536f8eb235bb",
+    "Answer": "自拍",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:2c4bf49405aa7dfa",
+    "Answer": "合照",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:94a68414728a479f",
+    "Answer": "抢被子",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:3cea999b576b28cc",
+    "Answer": "送花",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:7b03d6165623ea84",
+    "Answer": "送礼物",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d80ec44d55272974",
+    "Answer": "写情书",
+    "Aliases": [
+      "情书"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:0d8996305f3a5b33",
+    "Answer": "比心",
+    "Aliases": [
+      "比爱心"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6e4a98bc7d257775",
+    "Answer": "击掌",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4ab58e038ff68c34",
+    "Answer": "背对背",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:d1f00fa3f2d99956",
+    "Answer": "手牵手散步",
+    "Aliases": [
+      "牵手散步"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:356c544d746c3fc2",
+    "Answer": "一起做饭",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:62b1cfb728413b86",
+    "Answer": "一起洗碗",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:9487ab2730647101",
+    "Answer": "一起跑步",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:a0fc4faf63278dad",
+    "Answer": "一起看书",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:58ebb43e957b47ce",
+    "Answer": "一起打游戏",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:12f99e6e8a40e26f",
+    "Answer": "一起唱歌",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:f84679bfccb8acb2",
+    "Answer": "一起跳舞",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:52c19e59c7a21f04",
+    "Answer": "一起看星星",
+    "Aliases": [
+      "一起观星"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4bc9217b16904f48",
+    "Answer": "一起看日出",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:f268cd1bdf1d1910",
+    "Answer": "一起看日落",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:335f6c7db19d4c46",
+    "Answer": "一起放烟花",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:0ccefc2e23086b29",
+    "Answer": "一起撑伞",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:3f9ee00cf66af324",
+    "Answer": "一起堆沙堡",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:e6f66abd2c8df635",
+    "Answer": "一起坐摩天轮",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:89c6b6d4a6adf3d3",
+    "Answer": "一起骑单车",
+    "Aliases": [
+      "一起骑自行车"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:3c0b8ab83074a14c",
+    "Answer": "一起吃火锅",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:41eb2d099eb89bac",
+    "Answer": "一起吃冰淇淋",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:c05cafe61cbafe01",
+    "Answer": "分享耳机",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:655068d6306eab83",
+    "Answer": "分享零食",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:6c708afc0cb4d6e7",
+    "Answer": "交换礼物",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4860ec5266898c25",
+    "Answer": "生日许愿",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:b748e1867440a08b",
+    "Answer": "吹蜡烛",
+    "Aliases": [
+      "吹生日蜡烛"
+    ],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:df047e92033dd80a",
+    "Answer": "切蛋糕",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:20565832789e880f",
+    "Answer": "系鞋带",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:cf6673266af4d4a1",
+    "Answer": "梳头发",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:7cde33496abcca08",
+    "Answer": "擦眼泪",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:4b834145b28a06e6",
+    "Answer": "按摩",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:b72eab9476614ed7",
+    "Answer": "捶背",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:3c4ab11fc51c8316",
+    "Answer": "挠痒痒",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:5d051159fc183b06",
+    "Answer": "贴贴",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  },
+  {
+    "Key": "builtin:bc68b282c0168642",
+    "Answer": "公主抱",
+    "Aliases": [],
+    "Category": "情侣日常",
+    "Difficulty": 2
+  }
+]

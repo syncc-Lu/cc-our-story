@@ -18,4 +18,8 @@
 		<ProjectReference Include="..\OurStory.Data\OurStory.Data.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="Games/Data/draw-words.json" LogicalName="OurStory.DrawWords.json" />
+	</ItemGroup>
+
 </Project>

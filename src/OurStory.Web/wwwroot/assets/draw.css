@@ -1,0 +1,37 @@
+.draw-subtitle { color: var(--muted); font-size: 14px; line-height: 1.8; }
+.draw-matchbar { display: flex; align-items: center; gap: 20px; padding: 16px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); margin-bottom: 20px; font-size: 14px; }
+.draw-matchbar > strong { color: var(--pink-dark); }.draw-timer { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 700; }.draw-timer.urgent { color: var(--danger); }
+.draw-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; align-items: start; }
+.draw-workspace { min-width: 0; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow-sm); padding: 22px; }
+.draw-status { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 18px; }.draw-status h2 { font-size: 18px; margin: 0 0 8px; }.draw-status p { color: var(--muted); font-size: 12px; margin: 0; line-height: 1.8; }.draw-role { color: var(--pink-dark); background: var(--pink-softer); padding: 6px 9px; border-radius: 8px; font-size: 11px; white-space: nowrap; }
+.draw-secret { border: 1px dashed var(--pink); background: var(--pink-softer); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }.draw-secret span, .draw-secret small { color: var(--muted); font-size: 12px; }.draw-secret strong { display: block; font-size: 24px; margin: 6px 0; overflow-wrap: anywhere; }
+.draw-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }.draw-choice { text-align: left; padding: 16px 12px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface-soft); cursor: pointer; }.draw-choice strong { display: block; font-size: 18px; margin-bottom: 8px; overflow-wrap: anywhere; }.draw-choice small { color: var(--muted); font-size: 11px; }.draw-choice:hover { border-color: var(--pink); background: var(--pink-softer); }.draw-choice:disabled { opacity: .5; cursor: wait; }
+.draw-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }.draw-colors { display: flex; gap: 5px; }.draw-color { width: 24px; height: 24px; border: 1px solid #7775; border-radius: 50%; cursor: pointer; }.draw-color[aria-pressed=true] { outline: 2px solid var(--pink-dark); outline-offset: 2px; }.draw-toolbar label { font-size: 12px; color: var(--muted); }.draw-toolbar select { background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); padding: 5px; border-radius: 6px; }.draw-tool { font-size: 12px; border: 1px solid var(--line-strong); border-radius: 7px; padding: 7px 10px; cursor: pointer; }.draw-tool[aria-pressed=true] { background: var(--pink-softer); color: var(--pink-dark); border-color: var(--pink); }
+.draw-canvas-wrap { position: relative; width: 100%; aspect-ratio: 10 / 7; border: 1px solid #d7d4d0; border-radius: 12px; overflow: hidden; background: #fff; }.draw-canvas-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }.draw-canvas-wrap canvas[data-overlay] { pointer-events: none; }.draw-canvas-wrap canvas[data-overlay].can-draw { pointer-events: auto; touch-action: none; cursor: crosshair; }.draw-canvas-note { position: absolute; inset: 0; display: grid; place-items: center; padding: 30px; color: #aaa0ab; font-size: 14px; pointer-events: none; text-align: center; }
+.draw-sidebar { display: grid; gap: 18px; min-width: 0; }.draw-chat h2 { margin-bottom: 18px; }.draw-guesses { max-height: 230px; min-height: 100px; overflow-y: auto; margin-bottom: 18px; }.draw-guesses p { background: var(--surface-muted); border-radius: 12px 12px 12px 2px; padding: 10px 12px; font-size: 14px; margin: 0 0 8px; overflow-wrap: anywhere; }.draw-guesses p.correct { background: var(--pink-softer); color: var(--pink-dark); }.draw-guesses p.draw-empty { background: none; color: var(--muted); padding: 0; font-size: 12px; }.draw-chat form label { font-size: 12px; color: var(--muted); }.draw-guess-entry { display: flex; gap: 8px; margin: 8px 0; }.draw-guess-entry input { min-width: 0; flex: 1; padding: 10px; background: var(--surface-soft); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 9px; font: inherit; font-size: 13px; }.draw-guess-entry button { white-space: nowrap; }.draw-chat form small { color: var(--muted); font-size: 11px; line-height: 1.6; }.draw-reveal { margin-top: 22px; border-radius: 14px; padding: 20px; background: var(--pink-softer); text-align: center; }.draw-reveal p { color: var(--muted); font-size: 13px; }.draw-reveal h3 { font-size: 26px; margin: 10px 0 20px; overflow-wrap: anywhere; }.draw-manage { color: var(--pink-dark); font-size: 12px; }[data-results] { padding-left: 20px; font-size: 13px; line-height: 2; color: var(--muted); }
+.draw-page [hidden] { display: none !important; }.draw-page button:disabled { opacity: .5; cursor: not-allowed; }
+.draw-game-preview { background: linear-gradient(135deg, #f8e6eb, #eee9f7); }.draw-game-preview svg { width: 240px; height: 190px; stroke: #b65878; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; transform: rotate(-6deg); }.draw-game-preview .game-badge { color: #864765; }
+@media (max-width: 850px) { .draw-layout { grid-template-columns: minmax(0, 1fr); }.draw-sidebar { grid-template-columns: 1fr 1fr; }.draw-chat { grid-row: span 2; }.draw-page .gomoku-heading { align-items: flex-start; }.draw-page .gomoku-heading .game-badge { margin-top: 14px; } }
+@media (max-width: 540px) { .draw-workspace { padding: 14px; }.draw-sidebar { grid-template-columns: minmax(0, 1fr); }.draw-page .gomoku-heading { flex-direction: column; gap: 4px; }.draw-subtitle { margin-bottom: 0; }.draw-matchbar { gap: 10px; padding: 14px; font-size: 12px; }.draw-status { flex-wrap: wrap; }.draw-choices { gap: 7px; }.draw-choice { padding: 12px 8px; }.draw-choice strong { font-size: 16px; }.draw-color { width: 27px; height: 27px; }.draw-guesses { min-height: 45px; max-height: 150px; }.draw-reveal { padding: 15px; } }
+/* 把对局操作留在画布附近，缩短开局后需要滚动的距离。 */
+.draw-page { padding-top: 102px; }
+.draw-page .gomoku-heading { margin: 16px 0; }
+.draw-page .gomoku-heading .games-eyebrow { margin: 0 0 8px; }
+.draw-page .gomoku-heading h1 { font-size: 30px; }
+.draw-subtitle { margin: 8px 0 0; }
+.draw-matchbar { padding: 12px 18px; margin-bottom: 16px; }
+.draw-status { margin-bottom: 14px; }
+.draw-secret { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 5px 14px; padding: 10px 14px; margin-bottom: 12px; }
+.draw-secret strong { margin: 0; font-size: 22px; }
+.draw-secret small { grid-column: 1 / -1; }
+.draw-chat { padding: 18px; }
+.draw-chat .games-eyebrow { margin: 0; }
+.draw-chat h2 { margin: 10px 0 14px; }
+.draw-guesses { min-height: 60px; }
+@media (max-width: 540px) {
+    .draw-page { padding-top: 94px; }
+    .draw-page .gomoku-heading { margin: 14px 0; }
+    .draw-page .gomoku-heading .game-badge { margin-top: 6px; }
+    .draw-matchbar { padding: 12px; }
+    .draw-guesses { min-height: 35px; }
+}

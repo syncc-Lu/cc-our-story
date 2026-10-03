@@ -1,0 +1,50 @@
+@page "/games/draw"
+@model OurStory.Web.Pages.Games.DrawModel
+@inject AssetVersionProvider Assets
+@{
+    ViewData["Title"] = "你画我猜 · 一起玩";
+    ViewData["ActiveNav"] = "games";
+    ViewData["Bundle"] = "games";
+}
+@section Styles { <link rel="stylesheet" href="@Assets.Url("assets/draw.css")"> }
+<main id="main" class="games-page draw-page" data-draw-game>
+    <a class="games-back" href="/games">@Icon("arrow-left") 全部小游戏</a>
+    <header class="gomoku-heading"><div><p class="games-eyebrow">A PICTURE BETWEEN US</p><h1>你画，我懂</h1><p class="draw-subtitle">画得像不像不重要，猜到你心里才算赢。</p></div><span class="game-badge">在线双人 · 合作挑战</span></header>
+    <noscript><p class="game-error">请启用 JavaScript 后再玩，画板需要实时同步。</p></noscript>
+    <div class="draw-matchbar"><span data-round>准备开始</span><strong data-score>共同猜中 0 / 6</strong><span class="draw-timer" data-timer aria-label="本轮剩余时间">90 秒</span></div>
+    <div class="draw-layout">
+        <section class="draw-workspace" aria-labelledby="draw-status">
+            <div class="draw-status"><div><h2 id="draw-status" data-status role="status" aria-live="polite">正在连接…</h2><p data-hint>双方登录各自账号，打开此页面即可一起玩。</p></div><span class="draw-role" data-role>两个人的画室</span></div>
+            <div class="draw-secret" data-secret hidden><span>本轮你要画</span><strong data-answer></strong><small>只有你能看到 · 请用图画表达，不要直接写答案</small></div>
+            <div class="draw-choices" data-choices hidden aria-label="选择本轮要画的词"></div>
+            <div class="draw-toolbar" data-toolbar hidden aria-label="画笔工具">
+                <div class="draw-colors" data-colors></div>
+                <label>粗细 <select data-width aria-label="画笔粗细"><option value="4">细</option><option value="8" selected>中</option><option value="16">粗</option><option value="28">特粗</option></select></label>
+                <button type="button" class="draw-tool" data-eraser aria-pressed="false">橡皮</button>
+                <button type="button" class="draw-tool" data-clear>清空</button>
+            </div>
+            <div class="draw-canvas-wrap">
+                <canvas width="1000" height="700" data-canvas role="img" aria-label="双方共享的画布"></canvas>
+                <canvas width="1000" height="700" data-overlay tabindex="0" aria-label="绘画操作区，请用鼠标或触屏画画"></canvas>
+                <div class="draw-canvas-note" data-canvas-note>一方画出线索，一方猜出答案</div>
+            </div>
+            <div class="board-caption"><span data-ink-state>画布与猜测自动保存</span><span>每轮 90 秒 · 轮流画猜</span></div>
+            <section class="draw-reveal" data-reveal hidden aria-live="polite"><p data-reveal-result></p><h3 data-reveal-answer></h3><button type="button" class="game-button primary" data-next>交换角色，下一轮</button></section>
+        </section>
+        <aside class="draw-sidebar">
+            <section class="game-panel draw-chat"><p class="games-eyebrow">A LITTLE TEAMWORK</p><h2>猜猜你画了什么</h2>
+                <div class="draw-guesses" data-guesses role="log" aria-live="polite"><p class="draw-empty">猜测会出现在这里。</p></div>
+                <form data-guess-form><label for="draw-guess">你的猜测</label><div class="draw-guess-entry"><input id="draw-guess" name="guess" maxlength="48" autocomplete="off" placeholder="输入你想到的答案" disabled><button class="game-button primary" type="submit" data-guess-button disabled>猜一下</button></div><small data-guess-help>轮到猜词时即可输入，不限一次机会。</small></form>
+            </section>
+            <section class="game-panel"><p class="game-connection" data-connection role="status">正在连接…</p><p class="game-error" data-error role="alert" hidden></p>
+                <div class="game-actions"><button class="game-button primary" type="button" data-start disabled>开始 6 轮挑战</button><button class="game-button" type="button" data-end disabled>结束本局</button><button class="game-button" type="button" data-refresh>重新同步</button><button class="game-button" type="button" data-invite>邀请对方</button></div>
+                <a href="/login?ReturnUrl=%2Fgames%2Fdraw" data-login class="game-login" hidden>重新登录，继续画猜</a>
+                <p class="game-help">开始后画画方三选一，猜词方看不到候选词和答案。45 秒后给出分类和字数提示；猜中或超时后揭晓答案。</p>
+                <p><a href="/admin/game-words" class="draw-manage">@Icon("pen-line") 管理你们的专属词库</a></p>
+            </section>
+            <section class="game-panel" data-summary hidden><h2>这一局的小默契</h2><ol data-results></ol><p class="game-help">一起猜中多少题，都算我们共同的成绩。</p></section>
+        </aside>
+    </div>
+    <div hidden>@Html.AntiForgeryToken()</div>
+</main>
+@section Scripts { <script src="@Assets.Url("assets/draw.js")" defer></script> }
