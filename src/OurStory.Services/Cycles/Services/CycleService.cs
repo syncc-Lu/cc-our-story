@@ -314,6 +314,30 @@ internal sealed class CycleService(
         return new CycleWriteResult(CycleWriteStatus.Saved, $"{submission.Date:M 月 d 日}新增了一条补充记录。");
     }
 
+    public async Task<CycleWriteResult> DeleteRecordAsync(int userId, int recordId, CancellationToken cancellationToken = default) {
+        var relationshipId = await FindRelationshipAsync(userId, cancellationToken);
+        if (relationshipId is null) return Forbidden();
+        await using var lease = await writes.EnterAsync(relationshipId.Value, cancellationToken);
+        var record = await db.CycleRecords.SingleOrDefaultAsync(
+            item => item.Id == recordId && item.RelationshipId == relationshipId.Value, cancellationToken);
+        if (record is null) return Invalid("记录不存在或已删除，请刷新后查看。");
+        db.CycleRecords.Remove(record);
+        await db.SaveChangesAsync(cancellationToken);
+        return new(CycleWriteStatus.Saved, "本次经期已删除，独立的每日补充记录仍保留。统计和预测已更新。");
+    }
+
+    public async Task<CycleWriteResult> DeleteDayLogAsync(int userId, int logId, CancellationToken cancellationToken = default) {
+        var relationshipId = await FindRelationshipAsync(userId, cancellationToken);
+        if (relationshipId is null) return Forbidden();
+        await using var lease = await writes.EnterAsync(relationshipId.Value, cancellationToken);
+        var log = await db.CycleDailyLogs.SingleOrDefaultAsync(
+            item => item.Id == logId && item.RelationshipId == relationshipId.Value, cancellationToken);
+        if (log is null) return Invalid("记录不存在或已删除，请刷新后查看。");
+        db.CycleDailyLogs.Remove(log);
+        await db.SaveChangesAsync(cancellationToken);
+        return new(CycleWriteStatus.Saved, "这条每日补充记录已删除，其他记录仍保留。");
+    }
+
     public async Task<IReadOnlyList<CycleReminder>> GetDueRemindersAsync(
         int userId,
         CancellationToken cancellationToken = default) {

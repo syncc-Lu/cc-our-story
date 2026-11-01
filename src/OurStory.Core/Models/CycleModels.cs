@@ -121,7 +121,10 @@ public sealed record CycleDayLog(
     CycleIntimacyOutcome IntimacyOutcome,
     int CreatedByUserId,
     string CreatedByName,
-    DateTime CreatedAt);
+    DateTime CreatedAt) {
+    /// <summary>每日记录标识，用于关系内管理。</summary>
+    public int Id { get; init; }
+}
 
 /// <summary>
 /// 一条周期记录在页面上的完整展示内容，历史时间轴与月历共用

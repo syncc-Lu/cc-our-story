@@ -504,6 +504,69 @@ public sealed class CycleServiceTests {
         Assert.Null(statistics.AveragePeriodDays);
     }
 
+    [Fact]
+    public async Task 删除进行中经期会更新统计并保留独立补充且允许重新开始() {
+        await using var harness = SqliteHarness.Create();
+        var (boy, girl) = await harness.SeedCoupleAsync();
+        var service = Service(harness.Db);
+        var today = TestDoubles.Clock().Today;
+        var created = await service.CreateAsync(boy, Submission(today, null));
+        await service.SaveDayAsync(girl, Day(today, "保留日常记录"));
+        Assert.Equal(CycleWriteStatus.Saved, (await service.DeleteRecordAsync(girl, created.RecordId!.Value)).Status);
+        var dashboard = await service.GetDashboardAsync(boy, 1, 10, today.Year, today.Month);
+        Assert.Equal(0, dashboard.Statistics.TotalRecords);
+        Assert.Null(dashboard.Current.ActiveRecordId);
+        Assert.Null(dashboard.Statistics.NextPrediction);
+        Assert.Single(await harness.Db.CycleDailyLogs.ToListAsync());
+        Assert.False((await service.DeleteRecordAsync(boy, created.RecordId.Value)).IsSuccess);
+        Assert.True((await service.StartAsync(boy, Guid.NewGuid().ToString(), false)).IsSuccess);
+    }
+
+    [Fact]
+    public async Task 删除每日补充只删除选中条目并同步月历标识和汇总() {
+        await using var harness = SqliteHarness.Create();
+        var (boy, girl) = await harness.SeedCoupleAsync();
+        var service = Service(harness.Db);
+        var today = TestDoubles.Clock().Today;
+        await service.CreateAsync(boy, Submission(today, null));
+        await service.SaveDayAsync(boy, Day(today, "误加"));
+        await service.SaveDayAsync(girl, Day(today, "保留"));
+        var calendar = await service.GetCalendarAsync(boy, today.Year, today.Month);
+        var day = calendar.Days.Single(item => item.Date == today);
+        var id = CycleDayPayload.From(day).Logs.Single(item => item.Note == "误加").Id;
+        Assert.True(id > 0);
+        Assert.True((await service.DeleteDayLogAsync(girl, id)).IsSuccess);
+        var remaining = Assert.Single(await harness.Db.CycleDailyLogs.ToListAsync());
+        Assert.Equal("保留", remaining.Note);
+        var dashboard = await service.GetDashboardAsync(boy, 1, 10, today.Year, today.Month);
+        Assert.Equal(1, Assert.Single(dashboard.History.Items).LogCount);
+        Assert.False((await service.DeleteDayLogAsync(boy, id)).IsSuccess);
+    }
+
+    [Fact]
+    public async Task 删除拒绝跨关系未登录和停用账号() {
+        await using var harness = SqliteHarness.Create();
+        var (boy, girl) = await harness.SeedCoupleAsync();
+        var service = Service(harness.Db);
+        var today = TestDoubles.Clock().Today;
+        var created = await service.CreateAsync(boy, Submission(today, null));
+        await service.SaveDayAsync(boy, Day(today, "私密"));
+        var logId = (await harness.Db.CycleDailyLogs.SingleAsync()).Id;
+        var stranger = new User { UserName = "other", Role = UserRole.Boy, PasswordHash = "test", CoupleRelationship = new CoupleRelationship() };
+        harness.Db.Users.Add(stranger);
+        await harness.Db.SaveChangesAsync();
+        foreach (var actor in new[] { 0, stranger.Id }) {
+            Assert.False((await service.DeleteRecordAsync(actor, created.RecordId!.Value)).IsSuccess);
+            Assert.False((await service.DeleteDayLogAsync(actor, logId)).IsSuccess);
+        }
+        (await harness.Db.Users.SingleAsync(item => item.Id == girl)).IsActive = false;
+        await harness.Db.SaveChangesAsync();
+        Assert.Equal(CycleWriteStatus.Forbidden, (await service.DeleteRecordAsync(girl, created.RecordId!.Value)).Status);
+        Assert.Equal(CycleWriteStatus.Forbidden, (await service.DeleteDayLogAsync(girl, logId)).Status);
+        Assert.Single(await harness.Db.CycleRecords.ToListAsync());
+        Assert.Single(await harness.Db.CycleDailyLogs.ToListAsync());
+    }
+
     #region 私有方法
 
     private static CycleDaySubmission Day(DateOnly date, string note) =>

@@ -513,6 +513,15 @@
                                     <blockquote>@item.Note</blockquote>
                                 }
 
+                                <details class="cycle-delete">
+                                    <summary>删除本次经期</summary>
+                                    <form method="post" asp-page-handler="DeleteRecord">
+                                        <input type="hidden" name="recordId" value="@item.Id" />
+                                        <p>删除 @Short(item.StartDate) 开始的这次经期后无法恢复。每日补充记录仍保留。</p>
+                                        <label><input type="checkbox" name="confirmed" value="true" required /> 确认删除这次经期</label>
+                                        <button type="submit" class="cycle-action">永久删除</button>
+                                    </form>
+                                </details>
                                 <footer>
                                     <small>
                                         @item.CreatedByName 记录
@@ -693,3 +702,17 @@
     </div>
 
 </main>
+
+<template id="cycle-delete-log-template">
+    <details class="cycle-delete">
+        <summary>删除这条记录</summary>
+        <form method="post" asp-page-handler="DeleteDayLog">
+            <input type="hidden" name="logId" />
+            <input type="hidden" name="year" />
+            <input type="hidden" name="month" />
+            <p>只删除这一条每日补充，无法恢复。同一天的其他记录和整次经期仍保留。</p>
+            <label><input type="checkbox" name="confirmed" value="true" required /> 确认删除这条记录</label>
+            <button type="submit" class="cycle-action">永久删除</button>
+        </form>
+    </details>
+</template>

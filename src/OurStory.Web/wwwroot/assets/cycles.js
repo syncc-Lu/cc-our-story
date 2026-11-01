@@ -309,6 +309,14 @@
       recordedAt.setAttribute('datetime', entry.recordedAt);
       meta.append(recordedAt);
       log.append(meta);
+      var deleteTemplate = document.getElementById('cycle-delete-log-template');
+      if (deleteTemplate && entry.id) {
+        var deletion = deleteTemplate.content.cloneNode(true);
+        deletion.querySelector('[name="logId"]').value = entry.id;
+        deletion.querySelector('[name="year"]').value = date.getFullYear();
+        deletion.querySelector('[name="month"]').value = date.getMonth() + 1;
+        log.append(deletion);
+      }
       agendaBody.append(log);
     });
     if (!dayLogs.length && !day.isFuture) {

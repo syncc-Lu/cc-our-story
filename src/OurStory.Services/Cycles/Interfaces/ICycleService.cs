@@ -87,6 +87,12 @@ public interface ICycleService {
         CycleRecordSubmission submission,
         CancellationToken cancellationToken = default);
 
+    /// <summary>删除当前情侣关系的一次经期，保留独立每日补充。</summary>
+    Task<CycleWriteResult> DeleteRecordAsync(int userId, int recordId, CancellationToken cancellationToken = default);
+
+    /// <summary>删除当前情侣关系的一条每日补充。</summary>
+    Task<CycleWriteResult> DeleteDayLogAsync(int userId, int logId, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// 异步为某一天追加一条独立的补充记录
     /// </summary>

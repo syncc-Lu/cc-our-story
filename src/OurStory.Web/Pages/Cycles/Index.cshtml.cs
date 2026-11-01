@@ -229,6 +229,18 @@ public sealed class IndexModel(ICycleService cycles, SiteClock clock) : PageMode
         return RedirectWith(await cycles.SaveDayAsync(userId, submission, cancellationToken), date.Year, date.Month);
     }
 
+    public async Task<IActionResult> OnPostDeleteRecordAsync(int recordId, bool confirmed, CancellationToken cancellationToken) {
+        if (!IsCoupleAccount(out var userId)) return Forbid();
+        if (!confirmed) return RedirectWith(new(CycleWriteStatus.Invalid, "请先确认删除这次经期。"));
+        return RedirectWith(await cycles.DeleteRecordAsync(userId, recordId, cancellationToken));
+    }
+
+    public async Task<IActionResult> OnPostDeleteDayLogAsync(int logId, bool confirmed, int? year, int? month, CancellationToken cancellationToken) {
+        if (!IsCoupleAccount(out var userId)) return Forbid();
+        if (!confirmed) return RedirectWith(new(CycleWriteStatus.Invalid, "请先确认删除这条补充记录。"));
+        return RedirectWith(await cycles.DeleteDayLogAsync(userId, logId, cancellationToken), year, month);
+    }
+
     #region 私有方法
 
     private async Task<IActionResult> LoadAsync(

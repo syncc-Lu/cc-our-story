@@ -237,6 +237,9 @@ public sealed record CycleLogPayload(
     string RecordedBy,
     string RecordedAt,
     string RecordedAtText) {
+    /// <summary>每日记录标识。</summary>
+    public int Id { get; init; }
+
     /// <summary>
     /// 将每日补充记录转换为前端传输模型
     /// </summary>
@@ -261,6 +264,6 @@ public sealed record CycleLogPayload(
             log.IntimacyOutcome.Name(),
             log.CreatedByName,
             log.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture),
-            log.CreatedAt.ToString("MM-dd HH:mm", CultureInfo.InvariantCulture));
+            log.CreatedAt.ToString("MM-dd HH:mm", CultureInfo.InvariantCulture)) { Id = log.Id };
     }
 }

@@ -535,3 +535,9 @@
     .cycle-ring-value { transition: none }
     .cycle-day-editor { transition: none }
 }
+
+.cycle-delete { margin-top: 14px; font-size: 13px; }
+.cycle-delete summary { cursor: pointer; color: var(--danger, #b33b4b); padding: 10px 0; }
+.cycle-delete form { padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+.cycle-delete label { display: block; margin: 12px 0; }
+.cycle-delete input[type=checkbox] { width: 18px; height: 18px; vertical-align: middle; }

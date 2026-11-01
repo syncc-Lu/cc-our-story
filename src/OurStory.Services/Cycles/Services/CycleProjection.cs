@@ -311,7 +311,7 @@ internal sealed class CycleProjection {
             item.IntimacyOutcome,
             item.CreatedByUserId,
             Name(item.CreatedByUser),
-            _clock.ToLocal(item.CreatedAt)))];
+            _clock.ToLocal(item.CreatedAt)) { Id = item.Id })];
 
     private CycleNarrativeContext Context(
         CycleRecord record,
